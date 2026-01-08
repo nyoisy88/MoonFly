@@ -1,10 +1,9 @@
 using System;
 using UnityEngine;
 
-public class Rocket : MonoBehaviour
+public class Rocket : Singleton<Rocket>
 {
     public const float GRAVITY_NORMAL = 0.7f;
-    public static Rocket Instance { get; private set; }
 
     public class OnLandedEventArgs : EventArgs
     {
@@ -30,13 +29,14 @@ public class Rocket : MonoBehaviour
 
     public enum State
     {
-        WaitingToStart,
-        Normal,
-        GameOver,
+        WaitingForInput,
+        Active,
+        Disabled,
     }
 
     public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
     public event EventHandler<OnLandedEventArgs> OnLanded;
+    public event EventHandler OnFuelPickedUp;
     public event EventHandler OnCoinPickedUp;
     public event EventHandler OnBeforeForce;
     public event EventHandler OnUpForce;
@@ -46,8 +46,9 @@ public class Rocket : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveDir;
     private float fuelAmount;
-    private float fuelAmountMax = 10f;
-    private float fuelExhaustRate = 1.0f;
+    private float fuelAmountMax = 12f;
+    private float fuelExhaustRate = 1f;
+    private bool isMoving;
 
     public Vector2 Speed => rb.linearVelocity;
 
@@ -65,44 +66,48 @@ public class Rocket : MonoBehaviour
         }
     }
 
-    private void Awake()
+    public bool IsMoving => isMoving;
+
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
         rb = GetComponent<Rigidbody2D>();
         fuelAmount = fuelAmountMax;
         rb.gravityScale = 0f;
-        state = State.WaitingToStart;
+        state = State.WaitingForInput;
     }
 
     void Update()
     {
-
         moveDir = GameInput.Instance.GetMovementInput();
     }
 
     private void FixedUpdate()
     {
         OnBeforeForce?.Invoke(this, EventArgs.Empty);
+        isMoving = false;
+        float gamePadDeadzone = .4f;
 
         switch (state)
         {
-            case State.WaitingToStart:
-                if (moveDir != Vector2.zero)
+            case State.WaitingForInput:
+                if (moveDir.y > gamePadDeadzone || Mathf.Abs(moveDir.x) > gamePadDeadzone)
                 {
                     ConsumeFuel();
                     rb.gravityScale = GRAVITY_NORMAL;
-                    CurrentState = State.Normal;
+                    CurrentState = State.Active;
+                    isMoving = true;
                 }
                 break;
-            case State.Normal:
+            case State.Active:
                 if (fuelAmount < 0f)
                 {
                     return;
                 }
-                float gamePadDeadzone = .4f;
-                if (moveDir != Vector2.zero)
+                if (moveDir.y > gamePadDeadzone || Mathf.Abs(moveDir.x) > gamePadDeadzone)
                 {
                     ConsumeFuel();
+                    isMoving = true;
                 }
                 float force = 700f;
                 if (moveDir.y > gamePadDeadzone)
@@ -119,7 +124,7 @@ public class Rocket : MonoBehaviour
                     OnTurnForce?.Invoke(this, turnRight);
                 }
                 break;
-            case State.GameOver:
+            case State.Disabled:
                 break;
         }
 
@@ -138,7 +143,7 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        CurrentState = State.GameOver;
+        CurrentState = State.Disabled;
         if (!collision.gameObject.TryGetComponent(out LandingPad landingPad))
         {
             OnLanded?.Invoke(this, new OnLandedEventArgs
@@ -155,7 +160,7 @@ public class Rocket : MonoBehaviour
             OnLanded?.Invoke(this, new OnLandedEventArgs
             {
                 landingType = LandingType.TooFastLanding,
-                landingSpeed = Mathf.RoundToInt(landingSpeedMagtitude),
+                landingSpeed = Mathf.RoundToInt(landingSpeedMagtitude * 5),
             });
             return;
         }
@@ -194,6 +199,7 @@ public class Rocket : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Fuel fuel))
         {
+            OnFuelPickedUp?.Invoke(this, EventArgs.Empty);
             fuelAmount = fuelAmountMax;
             fuel.DestroySelf();
             return;

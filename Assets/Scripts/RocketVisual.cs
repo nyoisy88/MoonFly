@@ -3,11 +3,19 @@ using UnityEngine;
 
 public class RocketVisual : MonoBehaviour
 {
-    [SerializeField] private Rocket rocket;
     [SerializeField] private ParticleSystem thrusterParticleSystemLeft;
     [SerializeField] private ParticleSystem thrusterParticleSystemMiddle;
     [SerializeField] private ParticleSystem thrusterParticleSystemRight;
     [SerializeField] private GameObject explosionVfx;
+
+    bool applyingUpForce;
+    bool applyingTurnForce;
+    Rocket rocket;
+
+    private void Awake()
+    {
+        rocket = GetComponent<Rocket>();
+    }
 
     private void Start()
     {
@@ -15,6 +23,8 @@ public class RocketVisual : MonoBehaviour
         rocket.OnTurnForce += Rocket_OnTurnForce;
         rocket.OnBeforeForce += Rocket_OnBeforeForce;
         rocket.OnLanded += Rocket_OnLanded;
+
+        DisableAllThruster();
     }
 
     private void Rocket_OnLanded(object sender, Rocket.OnLandedEventArgs e)
@@ -28,23 +38,44 @@ public class RocketVisual : MonoBehaviour
 
     private void Rocket_OnBeforeForce(object sender, EventArgs e)
     {
-        SetEnableThrusterParticleSystem(thrusterParticleSystemRight, false);
-        SetEnableThrusterParticleSystem(thrusterParticleSystemMiddle, false);
-        SetEnableThrusterParticleSystem(thrusterParticleSystemLeft, false);
+        if (!applyingUpForce && !applyingTurnForce)
+        {
+            return;
+        }
+        applyingTurnForce = false;
+        applyingUpForce = false;
+        DisableAllThruster();
     }
 
     private void Rocket_OnTurnForce(object sender, bool turnRight)
     {
+        if (applyingTurnForce)
+        {
+            return;
+        }
+        applyingTurnForce = true;
         SetEnableThrusterParticleSystem(thrusterParticleSystemLeft, turnRight);
         SetEnableThrusterParticleSystem(thrusterParticleSystemRight, !turnRight);
     }
 
     private void Rocket_OnUpForce(object sender, EventArgs e)
     {
+        if (applyingUpForce)
+        {
+            return;
+        }
+        applyingUpForce = true;
         SetEnableThrusterParticleSystem(thrusterParticleSystemRight, true);
         SetEnableThrusterParticleSystem(thrusterParticleSystemMiddle, true);
         SetEnableThrusterParticleSystem(thrusterParticleSystemLeft, true);
 
+    }
+
+    private void DisableAllThruster()
+    {
+        SetEnableThrusterParticleSystem(thrusterParticleSystemRight, false);
+        SetEnableThrusterParticleSystem(thrusterParticleSystemMiddle, false);
+        SetEnableThrusterParticleSystem(thrusterParticleSystemLeft, false);
     }
 
     private void SetEnableThrusterParticleSystem(ParticleSystem thrusterParticleSystem, bool enabled)

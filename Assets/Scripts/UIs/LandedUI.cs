@@ -1,11 +1,11 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LandedUI : MonoBehaviour
 {
+    [SerializeField] private GameObject container;
     [SerializeField] private TextMeshProUGUI landedResultText;
     [SerializeField] private TextMeshProUGUI statsText;
     [SerializeField] private Button nextBtn;
@@ -44,17 +44,17 @@ public class LandedUI : MonoBehaviour
         statsText.text = $@"{e.landingAngle}
                                 {e.landingSpeed}
                                 x{e.scoreMultiplier}
-                                {e.score + GameManager.Instance.CurrentScore}";
+                                {e.score + GameManager.Instance.Score}";
     }
 
     private void Show()
     {
-        gameObject.SetActive(true);
+        container.SetActive(true);
         nextBtn.Select();
     }
 
     private void Hide()
     {
-        gameObject.SetActive(false);
+        container.SetActive(false);
     }
 }

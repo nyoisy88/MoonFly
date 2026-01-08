@@ -2,31 +2,37 @@ using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using static Rocket;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager Instance {  get; private set; }
+    public const int COIN_PICKUP_SCORE = 500;
 
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
 
     private static int currentLevel = 1;
+    private static int totalScore = 0;
+
+    public static void ResetStaticData()
+    {
+        totalScore = 0;
+        currentLevel = 1;
+    }
+
     [SerializeField] private List<GameLevel> levelPrefabs;
     [SerializeField] private CinemachineCamera cinemachineCamera;
 
+    private State state;
     private int score;
     private float time;
     private bool isTimerActive;
     private bool isGamePaused;
-
-    public int CurrentScore => score;
-    public float CurrentTime => time;
+    public int Score => score;
+    public float Timer => time;
     public int CurrentLevel => currentLevel;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+    public int TotalScore => totalScore;
 
     private void Start()
     {
@@ -40,19 +46,19 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (!isTimerActive) return;
-        time += Time.deltaTime;
+        time += UnityEngine.Time.deltaTime;
     }
 
     private void Rocket_OnStateChanged(object sender, Rocket.OnStateChangedEventArgs e)
     {
-        isTimerActive = e.state == Rocket.State.Normal;
+        isTimerActive = e.state == Rocket.State.Active;
         if (isTimerActive)
         {
             cinemachineCamera.Target.TrackingTarget = Rocket.Instance.transform;
             CameraOrthographicZoom2D.Instance.SetNormalOrthographicSize();
         }
-    }    
-    
+    }
+
     private void Rocket_OnLanded(object sender, Rocket.OnLandedEventArgs e)
     {
         AddScore(e.score);
@@ -60,7 +66,7 @@ public class GameManager : MonoBehaviour
 
     private void Rocket_OnCoinPickedUp(object sender, EventArgs e)
     {
-        AddScore(100);
+        AddScore(COIN_PICKUP_SCORE);
     }
 
     private void GameInput_OnPauseAction(object sender, EventArgs e)
@@ -86,19 +92,24 @@ public class GameManager : MonoBehaviour
 
     private void LoadGameLevel()
     {
+        GameLevel gameLevel = GetGameLevel();
+        GameLevel spawnedGameLevel = Instantiate(gameLevel, Vector3.zero, Quaternion.identity);
+        Rocket.Instance.transform.position = spawnedGameLevel.RocketStartPosition;
+        cinemachineCamera.Target.TrackingTarget = spawnedGameLevel.CameraStartTargetTransfrom;
+        CameraOrthographicZoom2D.Instance.TargetOrthographicSize = spawnedGameLevel.ZoomOutOrthographicSize;
+    }
+
+    private GameLevel GetGameLevel()
+    {
         foreach (GameLevel gameLevel in levelPrefabs)
         {
             if (gameLevel.Level == currentLevel)
             {
-                GameLevel spawnedGameLevel = Instantiate(gameLevel, Vector3.zero, Quaternion.identity);
-                Rocket.Instance.transform.position =    spawnedGameLevel.RocketStartPosition;
-                cinemachineCamera.Target.TrackingTarget = spawnedGameLevel.CameraStartTargetTransfrom;
-                CameraOrthographicZoom2D.Instance.TargetOrthographicSize = spawnedGameLevel.ZoomOutOrthographicSize;
-                return;
+                return gameLevel;
             }
         }
+        return null;
     }
-
 
     private void AddScore(int scoreAmount)
     {
@@ -114,6 +125,14 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         currentLevel++;
-        SceneLoader.LoadScene(SceneLoader.Scene.GameScene);
+        totalScore += score;
+        if (GetGameLevel() == null)
+        {
+            SceneLoader.LoadScene(SceneLoader.Scene.GameOverScene);
+        }
+        else
+        {
+            SceneLoader.LoadScene(SceneLoader.Scene.GameScene);
+        }
     }
 }

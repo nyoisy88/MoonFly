@@ -28,8 +28,8 @@ public class StatsUI : MonoBehaviour
     private void UpdateStats()
     {
         statsText.text = $@"{GameManager.Instance.CurrentLevel}
-                            {GameManager.Instance.CurrentScore}
-                            {Mathf.Floor(GameManager.Instance.CurrentTime)}
+                            {GameManager.Instance.Score}
+                            {Mathf.Floor(GameManager.Instance.Timer)}
                             {Mathf.Floor(Mathf.Abs(Rocket.Instance.Speed.x * 5))}
                             {Mathf.Floor(Mathf.Abs(Rocket.Instance.Speed.y * 5))}";
         fuelProgressBarImage.fillAmount = Rocket.Instance.GetFuelAmountNormalized();

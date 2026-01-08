@@ -4,8 +4,11 @@ using UnityEngine.UI;
 
 public class PausedUI : MonoBehaviour
 {
+    [SerializeField] private Transform container;
     [SerializeField] private Button resumeBtn;
     [SerializeField] private Button mainmenuBtn;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider soundSlider;
 
     private void Awake()
     {
@@ -19,10 +22,22 @@ public class PausedUI : MonoBehaviour
         {
             SceneLoader.LoadScene(SceneLoader.Scene.MainMenu);
         } );
+
+        musicSlider.onValueChanged.AddListener((value) =>
+        {
+            MusicManager.Instance.MusicVolume = value;
+        });
+
+        soundSlider.onValueChanged.AddListener((value) =>
+        {
+            SoundManager.Instance.SoundVolume = value;
+        });
     }
 
     private void Start()
     {
+        musicSlider.value = MusicManager.Instance.MusicVolume;
+        soundSlider.value = SoundManager.Instance.SoundVolume;
         GameManager.Instance.OnGamePaused += GameManager_OnGamePaused;
         GameManager.Instance.OnGameUnpaused += GameManager_OnGameUnpaused;
         Hide();
@@ -40,12 +55,12 @@ public class PausedUI : MonoBehaviour
 
     private void Hide()
     {
-        gameObject.SetActive(false);
+        container.gameObject.SetActive(false);
         resumeBtn.Select();
     }
 
     private void Show()
     {
-        gameObject.SetActive(true);
+        container.gameObject.SetActive(true);
     }
 }
