@@ -19,6 +19,16 @@ public class Rocket : Singleton<Rocket>
         public State state;
     }
 
+    public class OnFuelPickedUpEventArgs : EventArgs
+    {
+        public Fuel fuelPickup;
+    }
+
+    public class OnCoinPickedUpEventArgs : EventArgs
+    {
+        public Coin coinPickup;
+    }
+
     public enum LandingType
     {
         WrongLandingArea,
@@ -36,8 +46,8 @@ public class Rocket : Singleton<Rocket>
 
     public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
     public event EventHandler<OnLandedEventArgs> OnLanded;
-    public event EventHandler OnFuelPickedUp;
-    public event EventHandler OnCoinPickedUp;
+    public event EventHandler<OnFuelPickedUpEventArgs> OnFuelPickedUp;
+    public event EventHandler<OnCoinPickedUpEventArgs> OnCoinPickedUp;
     public event EventHandler OnBeforeForce;
     public event EventHandler OnUpForce;
     public event EventHandler<bool> OnTurnForce;
@@ -199,15 +209,21 @@ public class Rocket : Singleton<Rocket>
     {
         if (collision.gameObject.TryGetComponent(out Fuel fuel))
         {
-            OnFuelPickedUp?.Invoke(this, EventArgs.Empty);
             fuelAmount = fuelAmountMax;
             fuel.DestroySelf();
+            OnFuelPickedUp?.Invoke(this, new OnFuelPickedUpEventArgs
+            {
+                fuelPickup = fuel
+            });
             return;
         }
         if (collision.gameObject.TryGetComponent(out Coin coin))
         {
-            OnCoinPickedUp?.Invoke(this, EventArgs.Empty);
             coin.DestroySelf();
+            OnCoinPickedUp?.Invoke(this, new OnCoinPickedUpEventArgs
+            {
+                coinPickup = coin
+            });
             return;
         }
 
