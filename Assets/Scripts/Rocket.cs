@@ -29,6 +29,11 @@ public class Rocket : Singleton<Rocket>
         public Coin coinPickup;
     }
 
+    public class OnCargoDeliveredEventArgs : EventArgs
+    {
+        public CargoChainCrate cargo;
+    }
+
     public enum LandingType
     {
         WrongLandingArea,
@@ -48,17 +53,25 @@ public class Rocket : Singleton<Rocket>
     public event EventHandler<OnLandedEventArgs> OnLanded;
     public event EventHandler<OnFuelPickedUpEventArgs> OnFuelPickedUp;
     public event EventHandler<OnCoinPickedUpEventArgs> OnCoinPickedUp;
+    public event EventHandler<OnCargoDeliveredEventArgs> OnCargoDelivered;
+    
     public event EventHandler OnBeforeForce;
     public event EventHandler OnUpForce;
     public event EventHandler<bool> OnTurnForce;
+
+    [SerializeField] private GameObject cargoChainPrefab;
 
     private State state;
     private Rigidbody2D rb;
     private Vector2 moveDir;
     private float fuelAmount;
-    private float fuelAmountMax = 12f;
-    private float fuelExhaustRate = 1f;
     private bool isMoving;
+    private CargoChainCrate cargo;
+    private CargoChain chain;
+
+    private readonly float fuelAmountMax = 12f;
+    private readonly float fuelExhaustRate = 1f;
+    readonly float gamePadDeadzone = .4f;
 
     public Vector2 Speed => rb.linearVelocity;
 
@@ -78,6 +91,8 @@ public class Rocket : Singleton<Rocket>
 
     public bool IsMoving => isMoving;
 
+    public CargoChainCrate Cargo => cargo;
+
     protected override void Awake()
     {
         base.Awake();
@@ -96,7 +111,6 @@ public class Rocket : Singleton<Rocket>
     {
         OnBeforeForce?.Invoke(this, EventArgs.Empty);
         isMoving = false;
-        float gamePadDeadzone = .4f;
 
         switch (state)
         {
@@ -119,14 +133,14 @@ public class Rocket : Singleton<Rocket>
                     ConsumeFuel();
                     isMoving = true;
                 }
-                float force = 700f;
+                float force = 7000f;
                 if (moveDir.y > gamePadDeadzone)
                 {
                     rb.AddForce(force * Time.fixedDeltaTime * transform.up);
                     OnUpForce?.Invoke(this, EventArgs.Empty);
                 }
 
-                float turnSpeed = -100f;
+                float turnSpeed = -1000f;
                 if (Mathf.Abs(moveDir.x) > gamePadDeadzone)
                 {
                     rb.AddTorque(moveDir.x * Time.fixedDeltaTime * turnSpeed);
@@ -149,6 +163,72 @@ public class Rocket : Singleton<Rocket>
     private void ConsumeFuel()
     {
         fuelAmount -= fuelExhaustRate * Time.fixedDeltaTime;
+    }
+
+    public void AddFuel(Fuel fuelPickup)
+    {
+        fuelAmount = fuelAmountMax;
+        OnFuelPickedUp?.Invoke(this, new OnFuelPickedUpEventArgs
+        {
+            fuelPickup = fuelPickup
+        });
+    }
+
+    public void AddCoin(Coin coinPickup)
+    {
+        OnCoinPickedUp?.Invoke(this, new OnCoinPickedUpEventArgs
+        {
+            coinPickup = coinPickup
+        });
+    }
+
+    public void PickUpCargo(CargoChainCrate cargo)
+    {
+        if (this.cargo != null) return;
+        CargoChain cargoChain = Instantiate(cargoChainPrefab, transform).GetComponent<CargoChain>();
+        cargoChain.Attach(cargo);
+        this.chain = cargoChain;
+        this.cargo = cargo;
+    }
+
+    private void ChainCargo_OnAttachmentLost(object sender, EventArgs e)
+    {
+        ClearCargo();
+    }
+
+    private void ClearCargo()
+    {
+        cargo = null;
+    }
+
+    public bool HasCargo()
+    {
+        return cargo != null;
+    }
+
+    public void DeliverCargo()
+    {
+        if (cargo != null)
+        {
+            OnCargoDelivered?.Invoke(this, new OnCargoDeliveredEventArgs
+            {
+                cargo = this.cargo,
+            });
+            ClearCargo();
+        }
+    }
+
+    public void CargoCrashed()
+    {
+        Destroy(cargo.gameObject);
+        Destroy(chain.gameObject);
+        ClearCargo();
+        ClearChain();
+    }
+
+    private void ClearChain()
+    {
+        chain = null;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -207,25 +287,11 @@ public class Rocket : Singleton<Rocket>
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out Fuel fuel))
+        if (collision.gameObject.TryGetComponent(out IPickup pickups))
         {
-            fuelAmount = fuelAmountMax;
-            fuel.DestroySelf();
-            OnFuelPickedUp?.Invoke(this, new OnFuelPickedUpEventArgs
-            {
-                fuelPickup = fuel
-            });
-            return;
-        }
-        if (collision.gameObject.TryGetComponent(out Coin coin))
-        {
-            coin.DestroySelf();
-            OnCoinPickedUp?.Invoke(this, new OnCoinPickedUpEventArgs
-            {
-                coinPickup = coin
-            });
-            return;
+            pickups.OnCollected(this);
         }
 
     }
+
 }

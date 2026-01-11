@@ -1,0 +1,335 @@
+fileFormatVersion: 2
+guid: 59e3ee4566d181248bea39766269e07a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5917676510832205790
+    second: crate_spritesheet_by_durchburch_de9u8ks_0
+  - first:
+      213: 9220823823824327153
+    second: crate_spritesheet_by_durchburch_de9u8ks_1
+  - first:
+      213: 2293118934103049745
+    second: crate_spritesheet_by_durchburch_de9u8ks_2
+  - first:
+      213: -4256690832684682670
+    second: crate_spritesheet_by_durchburch_de9u8ks_3
+  - first:
+      213: 5304720032214958081
+    second: crate_spritesheet_by_durchburch_de9u8ks_4
+  - first:
+      213: -4505128331069782467
+    second: crate_spritesheet_by_durchburch_de9u8ks_5
+  - first:
+      213: 8333203436883180933
+    second: crate_spritesheet_by_durchburch_de9u8ks_6
+  - first:
+      213: 1119684588375478885
+    second: crate_spritesheet_by_durchburch_de9u8ks_7
+  - first:
+      213: 601202001331962958
+    second: crate_spritesheet_by_durchburch_de9u8ks_8
+  - first:
+      213: -1715862546180497789
+    second: crate_spritesheet_by_durchburch_de9u8ks_9
+  - first:
+      213: -864068126948453141
+    second: crate_spritesheet_by_durchburch_de9u8ks_10
+  - first:
+      213: -1631683935395398636
+    second: crate_spritesheet_by_durchburch_de9u8ks_11
+  - first:
+      213: 4645681456888801854
+    second: crate_spritesheet_by_durchburch_de9u8ks_12
+  - first:
+      213: 3018264110515827633
+    second: crate_spritesheet_by_durchburch_de9u8ks_13
+  - first:
+      213: 9065655149963066871
+    second: crate_spritesheet_by_durchburch_de9u8ks_14
+  - first:
+      213: 8681367389608126217
+    second: crate_spritesheet_by_durchburch_de9u8ks_15
+  - first:
+      213: 606779934086004925
+    second: crate_spritesheet_by_durchburch_de9u8ks_16
+  - first:
+      213: 1048142861264735882
+    second: crate_spritesheet_by_durchburch_de9u8ks_17
+  - first:
+      213: 3029868595439555366
+    second: crate_spritesheet_by_durchburch_de9u8ks_18
+  - first:
+      213: -8356981155915826836
+    second: crate_spritesheet_by_durchburch_de9u8ks_19
+  - first:
+      213: -6605296809033186668
+    second: crate_spritesheet_by_durchburch_de9u8ks_20
+  - first:
+      213: -7186828053980481172
+    second: crate_spritesheet_by_durchburch_de9u8ks_21
+  - first:
+      213: 736283505066660597
+    second: crate_spritesheet_by_durchburch_de9u8ks_22
+  - first:
+      213: -3826953348063312547
+    second: crate_spritesheet_by_durchburch_de9u8ks_23
+  - first:
+      213: -4616981379655581592
+    second: crate_spritesheet_by_durchburch_de9u8ks_24
+  - first:
+      213: 7892364977320038275
+    second: crate_spritesheet_by_durchburch_de9u8ks_25
+  - first:
+      213: -2744341344182666932
+    second: crate_spritesheet_by_durchburch_de9u8ks_26
+  - first:
+      213: -8761295254419480222
+    second: crate_spritesheet_by_durchburch_de9u8ks_27
+  - first:
+      213: 6790510888013754635
+    second: crate_spritesheet_by_durchburch_de9u8ks_28
+  - first:
+      213: -7459072178042464391
+    second: crate_spritesheet_by_durchburch_de9u8ks_29
+  - first:
+      213: -1348694562309388412
+    second: crate_spritesheet_by_durchburch_de9u8ks_30
+  - first:
+      213: -3660015744847708346
+    second: crate_spritesheet_by_durchburch_de9u8ks_31
+  - first:
+      213: 4542132760248013499
+    second: crate_spritesheet_by_durchburch_de9u8ks_32
+  - first:
+      213: 3630476751264958583
+    second: crate_spritesheet_by_durchburch_de9u8ks_33
+  - first:
+      213: 5137665967832837219
+    second: crate_spritesheet_by_durchburch_de9u8ks_34
+  - first:
+      213: -7064953521086446161
+    second: crate_spritesheet_by_durchburch_de9u8ks_35
+  - first:
+      213: -5165777445637633036
+    second: crate_spritesheet_by_durchburch_de9u8ks_36
+  - first:
+      213: -8086175802695511470
+    second: crate_spritesheet_by_durchburch_de9u8ks_37
+  - first:
+      213: 1218854016891894159
+    second: crate_spritesheet_by_durchburch_de9u8ks_38
+  - first:
+      213: -3894774826982437589
+    second: crate_spritesheet_by_durchburch_de9u8ks_39
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: crate_spritesheet_by_durchburch_de9u8ks_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 66
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2206c2c019030eda0800000000000000
+      internalID: -5917676510832205790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: crate_spritesheet_by_durchburch_de9u8ks_1
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 65
+        width: 30
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f1128be962f6ff70800000000000000
+      internalID: 9220823823824327153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 02029a572c2873847a6b2245c7e40242
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      crate_spritesheet_by_durchburch_de9u8ks_0: -5917676510832205790
+      crate_spritesheet_by_durchburch_de9u8ks_1: 9220823823824327153
+      crate_spritesheet_by_durchburch_de9u8ks_10: -864068126948453141
+      crate_spritesheet_by_durchburch_de9u8ks_11: -1631683935395398636
+      crate_spritesheet_by_durchburch_de9u8ks_12: 4645681456888801854
+      crate_spritesheet_by_durchburch_de9u8ks_13: 3018264110515827633
+      crate_spritesheet_by_durchburch_de9u8ks_14: 9065655149963066871
+      crate_spritesheet_by_durchburch_de9u8ks_15: 8681367389608126217
+      crate_spritesheet_by_durchburch_de9u8ks_16: 606779934086004925
+      crate_spritesheet_by_durchburch_de9u8ks_17: 1048142861264735882
+      crate_spritesheet_by_durchburch_de9u8ks_18: 3029868595439555366
+      crate_spritesheet_by_durchburch_de9u8ks_19: -8356981155915826836
+      crate_spritesheet_by_durchburch_de9u8ks_2: 2293118934103049745
+      crate_spritesheet_by_durchburch_de9u8ks_20: -6605296809033186668
+      crate_spritesheet_by_durchburch_de9u8ks_21: -7186828053980481172
+      crate_spritesheet_by_durchburch_de9u8ks_22: 736283505066660597
+      crate_spritesheet_by_durchburch_de9u8ks_23: -3826953348063312547
+      crate_spritesheet_by_durchburch_de9u8ks_24: -4616981379655581592
+      crate_spritesheet_by_durchburch_de9u8ks_25: 7892364977320038275
+      crate_spritesheet_by_durchburch_de9u8ks_26: -2744341344182666932
+      crate_spritesheet_by_durchburch_de9u8ks_27: -8761295254419480222
+      crate_spritesheet_by_durchburch_de9u8ks_28: 6790510888013754635
+      crate_spritesheet_by_durchburch_de9u8ks_29: -7459072178042464391
+      crate_spritesheet_by_durchburch_de9u8ks_3: -4256690832684682670
+      crate_spritesheet_by_durchburch_de9u8ks_30: -1348694562309388412
+      crate_spritesheet_by_durchburch_de9u8ks_31: -3660015744847708346
+      crate_spritesheet_by_durchburch_de9u8ks_32: 4542132760248013499
+      crate_spritesheet_by_durchburch_de9u8ks_33: 3630476751264958583
+      crate_spritesheet_by_durchburch_de9u8ks_34: 5137665967832837219
+      crate_spritesheet_by_durchburch_de9u8ks_35: -7064953521086446161
+      crate_spritesheet_by_durchburch_de9u8ks_36: -5165777445637633036
+      crate_spritesheet_by_durchburch_de9u8ks_37: -8086175802695511470
+      crate_spritesheet_by_durchburch_de9u8ks_38: 1218854016891894159
+      crate_spritesheet_by_durchburch_de9u8ks_39: -3894774826982437589
+      crate_spritesheet_by_durchburch_de9u8ks_4: 5304720032214958081
+      crate_spritesheet_by_durchburch_de9u8ks_40: 699212011
+      crate_spritesheet_by_durchburch_de9u8ks_5: -4505128331069782467
+      crate_spritesheet_by_durchburch_de9u8ks_6: 8333203436883180933
+      crate_spritesheet_by_durchburch_de9u8ks_7: 1119684588375478885
+      crate_spritesheet_by_durchburch_de9u8ks_8: 601202001331962958
+      crate_spritesheet_by_durchburch_de9u8ks_9: -1715862546180497789
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

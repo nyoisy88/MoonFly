@@ -12,6 +12,15 @@ public class GameManagerVisual : Singleton<GameManagerVisual>
         Rocket.Instance.OnLanded += Rocket_OnLanded;
         Rocket.Instance.OnCoinPickedUp += Rocket_OnCoinPickedUp;
         Rocket.Instance.OnFuelPickedUp += Rocket_OnFuelPickedUp;
+        Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDropOff;
+    }
+
+    private void Rocket_OnCargoDropOff(object sender, Rocket.OnCargoDeliveredEventArgs e)
+    {
+        //ScorePopup scorePopup = Instantiate(scorePopupPrefab, e.cargoCrate.transform.position, Quaternion.identity);
+        //scorePopup.SetText("+" + GameManager.CARGO_DELIVERY_SCORE);
+        //Transform pickupCollectTransform = Instantiate(pickupCollectVfx, e.cargoCrate.transform.position, Quaternion.identity);
+        //Destroy(pickupCollectTransform.gameObject, 1f);
     }
 
     private void Rocket_OnFuelPickedUp(object sender, Rocket.OnFuelPickedUpEventArgs e)

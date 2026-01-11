@@ -13,6 +13,7 @@ public class RocketThrusterSound : MonoBehaviour
 
     private void Start()
     {
+        audioSource.volume = SoundManager.Instance.SoundVolume;
         SoundManager.Instance.OnSoundVolumeChanged += SoundManager_OnMusicVolumeChanged;
         GameManager.Instance.OnGamePaused += GM_OnGamePaused;
         GameManager.Instance.OnGameUnpaused += GameManager_OnGameUnpaused;

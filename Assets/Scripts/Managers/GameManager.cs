@@ -7,6 +7,8 @@ using static Rocket;
 public class GameManager : Singleton<GameManager>
 {
     public const int COIN_PICKUP_SCORE = 500;
+    public const int CARGO_DELIVERY_SCORE = 5000;
+
 
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
@@ -37,6 +39,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         Rocket.Instance.OnCoinPickedUp += Rocket_OnCoinPickedUp;
+        Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDropOff;
         Rocket.Instance.OnLanded += Rocket_OnLanded;
         Rocket.Instance.OnStateChanged += Rocket_OnStateChanged;
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
@@ -67,6 +70,11 @@ public class GameManager : Singleton<GameManager>
     private void Rocket_OnCoinPickedUp(object sender, EventArgs e)
     {
         AddScore(COIN_PICKUP_SCORE);
+    }
+
+    private void Rocket_OnCargoDropOff(object sender, EventArgs e)
+    {
+        AddScore(CARGO_DELIVERY_SCORE);
     }
 
     private void GameInput_OnPauseAction(object sender, EventArgs e)

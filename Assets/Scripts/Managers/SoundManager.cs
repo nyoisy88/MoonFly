@@ -28,12 +28,23 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        soundVolumeMultiplier = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_VOLUME, 1f);
+    }
+
     private void Start()
     {
-        soundVolumeMultiplier = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_VOLUME, 1f);
         Rocket.Instance.OnCoinPickedUp += Rocket_OnCoinPickedUp;
         Rocket.Instance.OnFuelPickedUp += Rocket_OnFuelPickedUp;
         Rocket.Instance.OnLanded += Rocket_OnLanded;
+        Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDelivered;
+    }
+
+    private void Rocket_OnCargoDelivered(object sender, Rocket.OnCargoDeliveredEventArgs e)
+    {
+        PlaySound(coinPickUp);
     }
 
     private void Rocket_OnLanded(object sender, Rocket.OnLandedEventArgs e)
