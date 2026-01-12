@@ -1,3 +1,4 @@
+using Signals;
 using System;
 using UnityEngine;
 
@@ -38,7 +39,8 @@ public class SoundManager : Singleton<SoundManager>
     {
         Rocket.Instance.OnCoinPickedUp += Rocket_OnCoinPickedUp;
         Rocket.Instance.OnFuelPickedUp += Rocket_OnFuelPickedUp;
-        Rocket.Instance.OnLanded += Rocket_OnLanded;
+        //Rocket.Instance.OnLanded += Rocket_OnLanded;
+        SignalBus.Subcribe<RocketLandedSignal>(OnRocketLanded);
         Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDelivered;
     }
 
@@ -47,15 +49,15 @@ public class SoundManager : Singleton<SoundManager>
         PlaySound(coinPickUp);
     }
 
-    private void Rocket_OnLanded(object sender, Rocket.OnLandedEventArgs e)
+    private void OnRocketLanded(RocketLandedSignal signal)
     {
-        switch (e.landingType)
+        switch (signal.landingType)
         {
             case Rocket.LandingType.Success:
                 PlaySound(landingSuccess);
                 break;
             default:
-                PlaySound(crash); 
+                PlaySound(crash);
                 break;
         }
     }
@@ -79,5 +81,10 @@ public class SoundManager : Singleton<SoundManager>
     private void PlaySound(AudioClip clip, float volume = 1f)
     {
         AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, volume * soundVolumeMultiplier);
+    }
+
+    private void OnDestroy()
+    {
+        SignalBus.Unsubcribe<RocketLandedSignal>(OnRocketLanded);
     }
 }

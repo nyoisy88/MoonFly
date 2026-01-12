@@ -1,3 +1,4 @@
+using Signals;
 using System;
 using UnityEngine;
 
@@ -22,12 +23,13 @@ public class RocketVisual : MonoBehaviour
         rocket.OnUpForce += Rocket_OnUpForce;
         rocket.OnTurnForce += Rocket_OnTurnForce;
         rocket.OnBeforeForce += Rocket_OnBeforeForce;
-        rocket.OnLanded += Rocket_OnLanded;
+        //rocket.OnLanded += Rocket_OnLanded;
+        SignalBus.Subcribe<RocketLandedSignal>(OnRocketLanded);
 
         DisableAllThruster();
     }
 
-    private void Rocket_OnLanded(object sender, Rocket.OnLandedEventArgs e)
+    private void OnRocketLanded(RocketLandedSignal e)
     {
         if (e.landingType == Rocket.LandingType.WrongLandingArea)
         {
@@ -82,5 +84,10 @@ public class RocketVisual : MonoBehaviour
     {
         ParticleSystem.EmissionModule thrusterEmissionModule = thrusterParticleSystem.emission;
         thrusterEmissionModule.enabled = enabled;
+    }
+
+    private void OnDestroy()
+    {
+        SignalBus.Unsubcribe<RocketLandedSignal>(OnRocketLanded);
     }
 }

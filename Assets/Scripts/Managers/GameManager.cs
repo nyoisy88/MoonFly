@@ -1,3 +1,4 @@
+using Signals;
 using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
@@ -38,12 +39,17 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        SignalBus.Subcribe<RocketLandedSignal>(OnRocketLanded);
         Rocket.Instance.OnCoinPickedUp += Rocket_OnCoinPickedUp;
         Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDropOff;
-        Rocket.Instance.OnLanded += Rocket_OnLanded;
         Rocket.Instance.OnStateChanged += Rocket_OnStateChanged;
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
         LoadGameLevel();
+    }
+
+    private void OnDestroy()
+    {
+        SignalBus.Unsubcribe<RocketLandedSignal>(OnRocketLanded);
     }
 
     private void Update()
@@ -62,9 +68,9 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void Rocket_OnLanded(object sender, Rocket.OnLandedEventArgs e)
+    private void OnRocketLanded(RocketLandedSignal signal)
     {
-        AddScore(e.score);
+        AddScore(signal.score);
     }
 
     private void Rocket_OnCoinPickedUp(object sender, EventArgs e)

@@ -1,3 +1,4 @@
+using Signals;
 using System;
 using UnityEngine;
 
@@ -5,14 +6,6 @@ public class Rocket : Singleton<Rocket>
 {
     public const float GRAVITY_NORMAL = 0.7f;
 
-    public class OnLandedEventArgs : EventArgs
-    {
-        public LandingType landingType;
-        public int landingAngle;
-        public int landingSpeed;
-        public int scoreMultiplier;
-        public int score;
-    }
 
     public class OnStateChangedEventArgs : EventArgs
     {
@@ -50,7 +43,7 @@ public class Rocket : Singleton<Rocket>
     }
 
     public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
-    public event EventHandler<OnLandedEventArgs> OnLanded;
+    //public event EventHandler<OnLandedEventArgs> OnLanded;
     public event EventHandler<OnFuelPickedUpEventArgs> OnFuelPickedUp;
     public event EventHandler<OnCoinPickedUpEventArgs> OnCoinPickedUp;
     public event EventHandler<OnCargoDeliveredEventArgs> OnCargoDelivered;
@@ -186,14 +179,9 @@ public class Rocket : Singleton<Rocket>
     {
         if (this.cargo != null) return;
         CargoChain cargoChain = Instantiate(cargoChainPrefab, transform).GetComponent<CargoChain>();
-        cargoChain.Attach(cargo);
+        cargoChain.Attach(rb, cargo);
         this.chain = cargoChain;
         this.cargo = cargo;
-    }
-
-    private void ChainCargo_OnAttachmentLost(object sender, EventArgs e)
-    {
-        ClearCargo();
     }
 
     private void ClearCargo()
@@ -214,7 +202,10 @@ public class Rocket : Singleton<Rocket>
             {
                 cargo = this.cargo,
             });
+            Destroy(cargo.gameObject);
+            Destroy(chain.gameObject);
             ClearCargo();
+            ClearChain();
         }
     }
 
@@ -236,22 +227,32 @@ public class Rocket : Singleton<Rocket>
         CurrentState = State.Disabled;
         if (!collision.gameObject.TryGetComponent(out LandingPad landingPad))
         {
-            OnLanded?.Invoke(this, new OnLandedEventArgs
+            SignalBus.Fire(new RocketLandedSignal
             {
                 landingType = LandingType.WrongLandingArea,
                 score = 0,
             });
+            //OnLanded?.Invoke(this, new OnLandedEventArgs
+            //{
+            //    landingType = LandingType.WrongLandingArea,
+            //    score = 0,
+            //});
             return;
         }
         float softLandingVelocityMagtitude = 5f;
         float landingSpeedMagtitude = collision.relativeVelocity.magnitude;
         if (landingSpeedMagtitude > softLandingVelocityMagtitude)
         {
-            OnLanded?.Invoke(this, new OnLandedEventArgs
+            SignalBus.Fire(new RocketLandedSignal
             {
                 landingType = LandingType.TooFastLanding,
                 landingSpeed = Mathf.RoundToInt(landingSpeedMagtitude * 5),
             });
+            //OnLanded?.Invoke(this, new OnLandedEventArgs
+            //{
+            //    landingType = LandingType.TooFastLanding,
+            //    landingSpeed = Mathf.RoundToInt(landingSpeedMagtitude * 5),
+            //});
             return;
         }
 
@@ -259,12 +260,17 @@ public class Rocket : Singleton<Rocket>
         float minDotLandingVector = 0.9f;
         if (dotVectorLanding < minDotLandingVector)
         {
-            OnLanded?.Invoke(this, new OnLandedEventArgs
+            SignalBus.Fire(new RocketLandedSignal
             {
                 landingType = LandingType.TooSteepAngle,
                 landingAngle = Mathf.RoundToInt(dotVectorLanding * 100),
-                score = 0,
             });
+            //OnLanded?.Invoke(this, new OnLandedEventArgs
+            //{
+            //    landingType = LandingType.TooSteepAngle,
+            //    landingAngle = Mathf.RoundToInt(dotVectorLanding * 100),
+            //    score = 0,
+            //});
             return;
         }
 
@@ -275,7 +281,8 @@ public class Rocket : Singleton<Rocket>
         float scoreDotVectorMultiplier = 10f;
         float landingAngleScore = maxLandingAngleScore - (1f - dotVectorLanding) * scoreDotVectorMultiplier * maxLandingAngleScore;
         int total = Mathf.RoundToInt(landingPad.ScoreMultiplier * (landingAngleScore + landingSpeedScore));
-        OnLanded?.Invoke(this, new OnLandedEventArgs
+
+        SignalBus.Fire(new RocketLandedSignal
         {
             landingType = LandingType.Success,
             landingAngle = Mathf.RoundToInt(dotVectorLanding * 100),
@@ -283,6 +290,14 @@ public class Rocket : Singleton<Rocket>
             scoreMultiplier = landingPad.ScoreMultiplier,
             score = total
         });
+        //OnLanded?.Invoke(this, new OnLandedEventArgs
+        //{
+        //    landingType = LandingType.Success,
+        //    landingAngle = Mathf.RoundToInt(dotVectorLanding * 100),
+        //    landingSpeed = Mathf.RoundToInt(landingSpeedMagtitude * 5),
+        //    scoreMultiplier = landingPad.ScoreMultiplier,
+        //    score = total
+        //});
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

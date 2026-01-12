@@ -1,3 +1,4 @@
+using Signals;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -9,40 +10,31 @@ public class GameManagerVisual : Singleton<GameManagerVisual>
 
     private void Start()
     {
-        Rocket.Instance.OnLanded += Rocket_OnLanded;
+        //Rocket.Instance.OnLanded += Rocket_OnLanded;
+        SignalBus.Subcribe<RocketLandedSignal>(OnRocketLanded);
         Rocket.Instance.OnCoinPickedUp += Rocket_OnCoinPickedUp;
         Rocket.Instance.OnFuelPickedUp += Rocket_OnFuelPickedUp;
-        Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDropOff;
+        Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDelivered;
     }
 
-    private void Rocket_OnCargoDropOff(object sender, Rocket.OnCargoDeliveredEventArgs e)
+    private void Rocket_OnCargoDelivered(object sender, Rocket.OnCargoDeliveredEventArgs e)
     {
-        //ScorePopup scorePopup = Instantiate(scorePopupPrefab, e.cargoCrate.transform.position, Quaternion.identity);
-        //scorePopup.SetText("+" + GameManager.CARGO_DELIVERY_SCORE);
-        //Transform pickupCollectTransform = Instantiate(pickupCollectVfx, e.cargoCrate.transform.position, Quaternion.identity);
-        //Destroy(pickupCollectTransform.gameObject, 1f);
+        PlayPickupFeedback($"+{GameManager.CARGO_DELIVERY_SCORE}", e.cargo.transform.position);
     }
 
     private void Rocket_OnFuelPickedUp(object sender, Rocket.OnFuelPickedUpEventArgs e)
     {
-        ScorePopup scorePopup = Instantiate(scorePopupPrefab, e.fuelPickup.transform.position, Quaternion.identity);
-        scorePopup.SetText("REFILL");
-        Transform pickupCollectTransform = Instantiate(pickupCollectVfx, e.fuelPickup.transform.position, Quaternion.identity);
-        Destroy(pickupCollectTransform.gameObject, 1f);
-
+        PlayPickupFeedback("REFILL", e.fuelPickup.transform.position);
     }
 
     private void Rocket_OnCoinPickedUp(object sender, Rocket.OnCoinPickedUpEventArgs e)
     {
-        ScorePopup scorePopup = Instantiate(scorePopupPrefab, e.coinPickup.transform.position, Quaternion.identity);
-        scorePopup.SetText($"+{GameManager.COIN_PICKUP_SCORE}");
-        Transform pickupCollectTransform = Instantiate(pickupCollectVfx, e.coinPickup.transform.position, Quaternion.identity);
-        Destroy(pickupCollectTransform.gameObject, 1f);
+        PlayPickupFeedback($"+{GameManager.COIN_PICKUP_SCORE}", e.coinPickup.transform.position);
     }
 
-    private void Rocket_OnLanded(object sender, Rocket.OnLandedEventArgs e)
+    private void OnRocketLanded(RocketLandedSignal signal)
     {
-        switch (e.landingType)
+        switch (signal.landingType)
         {
             case Rocket.LandingType.TooSteepAngle:
             case Rocket.LandingType.TooFastLanding:
@@ -50,5 +42,18 @@ public class GameManagerVisual : Singleton<GameManagerVisual>
                 impulseSource.GenerateImpulse();
                 break;
         }
+    }
+
+    private void PlayPickupFeedback(string message, Vector3 position)
+    {
+        ScorePopup scorePopup = Instantiate(scorePopupPrefab, position, Quaternion.identity);
+        scorePopup.SetText(message);
+        Transform pickupCollectTransform = Instantiate(pickupCollectVfx, position, Quaternion.identity);
+        Destroy(pickupCollectTransform.gameObject, 1f);
+    }
+
+    private void OnDestroy()
+    {
+        SignalBus.Unsubcribe<RocketLandedSignal>(OnRocketLanded);
     }
 }

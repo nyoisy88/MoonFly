@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Crate
   m_EditorClassIdentifier: Assembly-CSharp::CargoSO
   cargoName: JustCrate
-  cargoAttachmentPrefab: {fileID: 3861284551394368400, guid: 73d0c87842058db4b867f57a550570a8, type: 3}
+  cargoPrefab: {fileID: 3861284551394368400, guid: 73d0c87842058db4b867f57a550570a8, type: 3}
   sprite: {fileID: -5917676510832205790, guid: 59e3ee4566d181248bea39766269e07a, type: 3}

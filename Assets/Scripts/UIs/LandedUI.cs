@@ -1,3 +1,4 @@
+using Signals;
 using System;
 using TMPro;
 using UnityEngine;
@@ -19,16 +20,18 @@ public class LandedUI : MonoBehaviour
         {
             OnNextButtonClick();
         });
-        Rocket.Instance.OnLanded += Rocket_HandleLandingOnce;
+        //Rocket.Instance.OnLanded += Rocket_HandleLandingOnce;
+        SignalBus.Subcribe<RocketLandedSignal>(Rocket_HandleLandingOnce);
         Hide();
     }
 
-    private void Rocket_HandleLandingOnce(object sender, Rocket.OnLandedEventArgs e)
+    private void Rocket_HandleLandingOnce(RocketLandedSignal signal)
     {
-        Rocket.Instance.OnLanded -= Rocket_HandleLandingOnce;
+        //Rocket.Instance.OnLanded -= Rocket_HandleLandingOnce;
+        SignalBus.Unsubcribe<RocketLandedSignal>(Rocket_HandleLandingOnce);
 
         Show();
-        if (e.landingType == Rocket.LandingType.Success)
+        if (signal.landingType == Rocket.LandingType.Success)
         {
             landedResultText.text = "SUCCESS!!";
             nextBtnText.text = "NEXT LEVEL";
@@ -41,10 +44,10 @@ public class LandedUI : MonoBehaviour
             OnNextButtonClick = GameManager.Instance.Retry;
         }
 
-        statsText.text = $@"{e.landingAngle}
-                                {e.landingSpeed}
-                                x{e.scoreMultiplier}
-                                {e.score + GameManager.Instance.Score}";
+        statsText.text = $@"{signal.landingAngle}
+                                {signal.landingSpeed}
+                                x{signal.scoreMultiplier}
+                                {signal.score + GameManager.Instance.Score}";
     }
 
     private void Show()
@@ -56,5 +59,10 @@ public class LandedUI : MonoBehaviour
     private void Hide()
     {
         container.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        SignalBus.Unsubcribe<RocketLandedSignal>(Rocket_HandleLandingOnce);
     }
 }
