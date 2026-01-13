@@ -37,16 +37,10 @@ public class SoundManager : Singleton<SoundManager>
 
     private void Start()
     {
-        Rocket.Instance.OnCoinPickedUp += Rocket_OnCoinPickedUp;
-        Rocket.Instance.OnFuelPickedUp += Rocket_OnFuelPickedUp;
-        //Rocket.Instance.OnLanded += Rocket_OnLanded;
+        SignalBus.Subcribe<CoinPickedUpSignal>(OnCoinPickedUp);
+        SignalBus.Subcribe<FuelPickedUpSignal>(OnFuelPickedUp);
         SignalBus.Subcribe<RocketLandedSignal>(OnRocketLanded);
-        Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDelivered;
-    }
-
-    private void Rocket_OnCargoDelivered(object sender, Rocket.OnCargoDeliveredEventArgs e)
-    {
-        PlaySound(coinPickUp);
+        // Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDelivered;
     }
 
     private void OnRocketLanded(RocketLandedSignal signal)
@@ -62,12 +56,12 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    private void Rocket_OnFuelPickedUp(object sender, System.EventArgs e)
+    private void OnFuelPickedUp(FuelPickedUpSignal signal)
     {
         PlaySound(fuelPickUp);
     }
 
-    private void Rocket_OnCoinPickedUp(object sender, System.EventArgs e)
+    private void OnCoinPickedUp(CoinPickedUpSignal signal)
     {
         PlaySound(coinPickUp);
     }
@@ -86,5 +80,8 @@ public class SoundManager : Singleton<SoundManager>
     private void OnDestroy()
     {
         SignalBus.Unsubcribe<RocketLandedSignal>(OnRocketLanded);
+        SignalBus.Unsubcribe<CoinPickedUpSignal>(OnCoinPickedUp);
+        SignalBus.Unsubcribe<FuelPickedUpSignal>(OnFuelPickedUp);
+
     }
 }

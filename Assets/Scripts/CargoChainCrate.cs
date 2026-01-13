@@ -1,13 +1,8 @@
-using System;
+using Signals;
 using UnityEngine;
 
 public class CargoChainCrate : MonoBehaviour
 {
-    public event EventHandler<Event.OnCargoCrashedEventArgs> OnCargoCrashed;
-
-    [SerializeField] private CargoSO cargoSO;
-
-    public CargoSO CargoSO => cargoSO;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,18 +17,10 @@ public class CargoChainCrate : MonoBehaviour
         if (!collision.gameObject.TryGetComponent(out LandingPad _))
         {
             Rocket.Instance.CargoCrashed();
-            OnCargoCrashed?.Invoke(this, new Event.OnCargoCrashedEventArgs
+            SignalBus.Fire(new CargoCrashedSignal
             {
                 crashPoint = collision.GetContact(0).point
             });
         }
-    }
-}
-
-namespace Event
-{
-    public class OnCargoCrashedEventArgs : EventArgs
-    {
-        public Vector2 crashPoint;
     }
 }

@@ -15,18 +15,17 @@ public class CargoAreaVisual : MonoBehaviour
 
     private void Start()
     {
-        cargoArea.OnInteractCompleted += CargoArea_OnInteractComplete;
         cargoSprite.sprite = cargoArea.CargoSO.sprite;
+        cargoArea.OnCargoDelivered += CargoArea_OnCargoDelivered;
+    }
+
+    private void CargoArea_OnCargoDelivered(object sender, System.EventArgs e)
+    {
+        gameObject.SetActive(false);
     }
 
     private void Update()
     {
         interactBar.fillAmount = cargoArea.GetProgressNormalized();
     }
-
-    private void CargoArea_OnInteractComplete(object sender, System.EventArgs e)
-    {
-        gameObject.SetActive(false);
-    }
-
 }

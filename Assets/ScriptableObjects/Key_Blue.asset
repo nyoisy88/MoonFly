@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35176d330d45c324fa6f43cb680a9f49, type: 3}
-  m_Name: Crate
+  m_Name: Key_Blue
   m_EditorClassIdentifier: Assembly-CSharp::CargoSO
-  cargoName: Crate
-  sprite: {fileID: -5917676510832205790, guid: 59e3ee4566d181248bea39766269e07a, type: 3}
+  cargoName: Key_Blue
+  sprite: {fileID: 1009583812, guid: 17900c84aba78504e921ac5ec6defa1a, type: 3}

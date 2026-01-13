@@ -151,6 +151,7 @@ MonoBehaviour:
   impulseSource: {fileID: 1413027431}
   scorePopupPrefab: {fileID: 2677663608319902589, guid: fe88dce2ebae7a243a544295529ba1f9, type: 3}
   pickupCollectVfx: {fileID: 5910797970993155035, guid: 6f26ed8e4d0524342b29593bf6b30975, type: 3}
+  cargoCrashVfx: {fileID: 5794599511677616454, guid: 9a47fed3b8601964da7641e1000e91cd, type: 3}
 --- !u!4 &14738800
 Transform:
   m_ObjectHideFlags: 0
@@ -5318,6 +5319,9 @@ MonoBehaviour:
   levelPrefabs:
   - {fileID: 1803258044247779070, guid: 1df11eedf686b2c4a9bb8eb155443054, type: 3}
   - {fileID: 1803258044247779070, guid: 143e8949f40c4344fb5da3a111b797ef, type: 3}
+  - {fileID: 1803258044247779070, guid: 9c247a6e18e112a458fb13b62f52b5fd, type: 3}
+  - {fileID: 1803258044247779070, guid: 0f428bd7e631d20408bcad7d10b3d47c, type: 3}
+  - {fileID: 1803258044247779070, guid: 3d4616c1d8d3ad24f9c76b24f5b1da17, type: 3}
   cinemachineCamera: {fileID: 1971176379}
 --- !u!4 &1963925219
 Transform:
@@ -5471,7 +5475,7 @@ MonoBehaviour:
     AmplitudeGain: 1
     FrequencyGain: 1
     Duration: 1
-    m_NoiseOffsets: {x: 0, y: 0, z: 0}
+    m_NoiseOffsets: {x: -266.57333, y: 781.9855, z: -200.8313}
 --- !u!1 &1982522282
 GameObject:
   m_ObjectHideFlags: 0

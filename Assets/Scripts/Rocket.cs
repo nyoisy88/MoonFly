@@ -12,21 +12,6 @@ public class Rocket : Singleton<Rocket>
         public State state;
     }
 
-    public class OnFuelPickedUpEventArgs : EventArgs
-    {
-        public Fuel fuelPickup;
-    }
-
-    public class OnCoinPickedUpEventArgs : EventArgs
-    {
-        public Coin coinPickup;
-    }
-
-    public class OnCargoDeliveredEventArgs : EventArgs
-    {
-        public CargoChainCrate cargo;
-    }
-
     public enum LandingType
     {
         WrongLandingArea,
@@ -43,10 +28,6 @@ public class Rocket : Singleton<Rocket>
     }
 
     public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
-    //public event EventHandler<OnLandedEventArgs> OnLanded;
-    public event EventHandler<OnFuelPickedUpEventArgs> OnFuelPickedUp;
-    public event EventHandler<OnCoinPickedUpEventArgs> OnCoinPickedUp;
-    public event EventHandler<OnCargoDeliveredEventArgs> OnCargoDelivered;
     
     public event EventHandler OnBeforeForce;
     public event EventHandler OnUpForce;
@@ -59,8 +40,8 @@ public class Rocket : Singleton<Rocket>
     private Vector2 moveDir;
     private float fuelAmount;
     private bool isMoving;
-    private CargoChainCrate cargo;
-    private CargoChain chain;
+    private CargoSO cargoSO;
+    private CargoChain cargoChain;
 
     private readonly float fuelAmountMax = 12f;
     private readonly float fuelExhaustRate = 1f;
@@ -84,7 +65,7 @@ public class Rocket : Singleton<Rocket>
 
     public bool IsMoving => isMoving;
 
-    public CargoChainCrate Cargo => cargo;
+    public CargoSO CargoSO => cargoSO;
 
     protected override void Awake()
     {
@@ -161,49 +142,38 @@ public class Rocket : Singleton<Rocket>
     public void AddFuel(Fuel fuelPickup)
     {
         fuelAmount = fuelAmountMax;
-        OnFuelPickedUp?.Invoke(this, new OnFuelPickedUpEventArgs
-        {
-            fuelPickup = fuelPickup
-        });
+        SignalBus.Fire(new FuelPickedUpSignal { pickupPosition = fuelPickup.transform.position });
     }
 
     public void AddCoin(Coin coinPickup)
     {
-        OnCoinPickedUp?.Invoke(this, new OnCoinPickedUpEventArgs
-        {
-            coinPickup = coinPickup
-        });
+        SignalBus.Fire(new CoinPickedUpSignal { pickupPosition = coinPickup.transform.position});
     }
 
-    public void PickUpCargo(CargoChainCrate cargo)
+    public void PickUpCargo(CargoSO cargo)
     {
-        if (this.cargo != null) return;
+        if (this.cargoSO != null) return;
         CargoChain cargoChain = Instantiate(cargoChainPrefab, transform).GetComponent<CargoChain>();
         cargoChain.Attach(rb, cargo);
-        this.chain = cargoChain;
-        this.cargo = cargo;
+        this.cargoChain = cargoChain;
+        cargoSO = cargo;
     }
 
     private void ClearCargo()
     {
-        cargo = null;
+        cargoSO = null;
     }
 
     public bool HasCargo()
     {
-        return cargo != null;
+        return cargoSO != null;
     }
 
     public void DeliverCargo()
     {
-        if (cargo != null)
+        if (cargoSO != null)
         {
-            OnCargoDelivered?.Invoke(this, new OnCargoDeliveredEventArgs
-            {
-                cargo = this.cargo,
-            });
-            Destroy(cargo.gameObject);
-            Destroy(chain.gameObject);
+            Destroy(cargoChain.gameObject);
             ClearCargo();
             ClearChain();
         }
@@ -211,15 +181,14 @@ public class Rocket : Singleton<Rocket>
 
     public void CargoCrashed()
     {
-        Destroy(cargo.gameObject);
-        Destroy(chain.gameObject);
+        Destroy(cargoChain.gameObject);
         ClearCargo();
         ClearChain();
     }
 
     private void ClearChain()
     {
-        chain = null;
+        cargoChain = null;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -232,11 +201,6 @@ public class Rocket : Singleton<Rocket>
                 landingType = LandingType.WrongLandingArea,
                 score = 0,
             });
-            //OnLanded?.Invoke(this, new OnLandedEventArgs
-            //{
-            //    landingType = LandingType.WrongLandingArea,
-            //    score = 0,
-            //});
             return;
         }
         float softLandingVelocityMagtitude = 5f;
@@ -248,11 +212,6 @@ public class Rocket : Singleton<Rocket>
                 landingType = LandingType.TooFastLanding,
                 landingSpeed = Mathf.RoundToInt(landingSpeedMagtitude * 5),
             });
-            //OnLanded?.Invoke(this, new OnLandedEventArgs
-            //{
-            //    landingType = LandingType.TooFastLanding,
-            //    landingSpeed = Mathf.RoundToInt(landingSpeedMagtitude * 5),
-            //});
             return;
         }
 
@@ -265,12 +224,6 @@ public class Rocket : Singleton<Rocket>
                 landingType = LandingType.TooSteepAngle,
                 landingAngle = Mathf.RoundToInt(dotVectorLanding * 100),
             });
-            //OnLanded?.Invoke(this, new OnLandedEventArgs
-            //{
-            //    landingType = LandingType.TooSteepAngle,
-            //    landingAngle = Mathf.RoundToInt(dotVectorLanding * 100),
-            //    score = 0,
-            //});
             return;
         }
 
@@ -290,14 +243,6 @@ public class Rocket : Singleton<Rocket>
             scoreMultiplier = landingPad.ScoreMultiplier,
             score = total
         });
-        //OnLanded?.Invoke(this, new OnLandedEventArgs
-        //{
-        //    landingType = LandingType.Success,
-        //    landingAngle = Mathf.RoundToInt(dotVectorLanding * 100),
-        //    landingSpeed = Mathf.RoundToInt(landingSpeedMagtitude * 5),
-        //    scoreMultiplier = landingPad.ScoreMultiplier,
-        //    score = total
-        //});
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

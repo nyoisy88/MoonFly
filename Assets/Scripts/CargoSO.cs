@@ -4,6 +4,5 @@ using UnityEngine;
 public class CargoSO : ScriptableObject
 {
     public string cargoName;
-    public Transform cargoPrefab;
     public Sprite sprite;
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CargoArea : MonoBehaviour
 {
-    public event EventHandler OnInteractCompleted;
+    public event EventHandler OnCargoDelivered;
 
     [Serializable]
     public enum InteractType
@@ -20,15 +20,18 @@ public class CargoArea : MonoBehaviour
     private Rocket rocket;
 
     public CargoSO CargoSO => cargoSO;
+    public bool IsDisabled { get; private set; }
 
     private void Update()
     {
+        if (IsDisabled) return;
         if (CanInteract())
         {
             timer += Time.deltaTime;
             if (timer > interactTimer)
             {
                 CompleteInteraction();
+                timer = 0f;
             }
         }
         else
@@ -41,23 +44,29 @@ public class CargoArea : MonoBehaviour
 
     bool CanInteract()
     {
-        return interactType == InteractType.PickUp
-            ? rocket && !rocket.HasCargo()
-            : rocket && rocket.HasCargo() && rocket.Cargo.CargoSO == this.cargoSO;
+        if (interactType == InteractType.PickUp)
+        {
+            return rocket && !rocket.HasCargo();
+        }
+        else
+        {
+            return rocket && rocket.HasCargo() && rocket.CargoSO == this.cargoSO;
+        }
     }
 
     void CompleteInteraction()
     {
         if (interactType == InteractType.PickUp)
         {
-            Transform cargoTransform = Instantiate(cargoSO.cargoPrefab);
-            CargoChainCrate cargo = cargoTransform.GetComponent<CargoChainCrate>();
-            rocket.PickUpCargo(cargo);
+            rocket.PickUpCargo(cargoSO);
         }
         else
+        {
             rocket.DeliverCargo();
+            IsDisabled = true;
+            OnCargoDelivered?.Invoke(this, EventArgs.Empty);
+        }
 
-        OnInteractCompleted?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

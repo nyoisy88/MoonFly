@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace Signals
 {
-    public class RocketLandedSignal
+    public struct RocketLandedSignal
     {
         public Rocket.LandingType landingType;
         public int landingAngle;

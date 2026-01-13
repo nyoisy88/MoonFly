@@ -7,6 +7,7 @@ using static Rocket;
 
 public class GameManager : Singleton<GameManager>
 {
+    public const string PLAYER_PREFS_CURRENT_LEVEL = "Game_Level";
     public const int COIN_PICKUP_SCORE = 500;
     public const int CARGO_DELIVERY_SCORE = 5000;
 
@@ -14,13 +15,12 @@ public class GameManager : Singleton<GameManager>
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
 
-    private static int currentLevel = 1;
+    private int currentLevel;
     private static int totalScore = 0;
 
     public static void ResetStaticData()
     {
         totalScore = 0;
-        currentLevel = 1;
     }
 
     [SerializeField] private List<GameLevel> levelPrefabs;
@@ -37,11 +37,17 @@ public class GameManager : Singleton<GameManager>
 
     public int TotalScore => totalScore;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        currentLevel = 3;
+            // PlayerPrefs.GetInt(PLAYER_PREFS_CURRENT_LEVEL, 1);
+    }
     private void Start()
     {
         SignalBus.Subcribe<RocketLandedSignal>(OnRocketLanded);
-        Rocket.Instance.OnCoinPickedUp += Rocket_OnCoinPickedUp;
-        Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDropOff;
+        SignalBus.Subcribe<CoinPickedUpSignal>(OnCoinPickedUp);
+        //Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDropOff;
         Rocket.Instance.OnStateChanged += Rocket_OnStateChanged;
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
         LoadGameLevel();
@@ -50,6 +56,7 @@ public class GameManager : Singleton<GameManager>
     private void OnDestroy()
     {
         SignalBus.Unsubcribe<RocketLandedSignal>(OnRocketLanded);
+        SignalBus.Unsubcribe<CoinPickedUpSignal>(OnCoinPickedUp);
     }
 
     private void Update()
@@ -73,14 +80,9 @@ public class GameManager : Singleton<GameManager>
         AddScore(signal.score);
     }
 
-    private void Rocket_OnCoinPickedUp(object sender, EventArgs e)
+    private void OnCoinPickedUp(CoinPickedUpSignal signal)
     {
         AddScore(COIN_PICKUP_SCORE);
-    }
-
-    private void Rocket_OnCargoDropOff(object sender, EventArgs e)
-    {
-        AddScore(CARGO_DELIVERY_SCORE);
     }
 
     private void GameInput_OnPauseAction(object sender, EventArgs e)
@@ -142,10 +144,12 @@ public class GameManager : Singleton<GameManager>
         totalScore += score;
         if (GetGameLevel() == null)
         {
+            PlayerPrefs.SetInt(PLAYER_PREFS_CURRENT_LEVEL, 1);
             SceneLoader.LoadScene(SceneLoader.Scene.GameOverScene);
         }
         else
         {
+            PlayerPrefs.SetInt(PLAYER_PREFS_CURRENT_LEVEL, currentLevel);
             SceneLoader.LoadScene(SceneLoader.Scene.GameScene);
         }
     }

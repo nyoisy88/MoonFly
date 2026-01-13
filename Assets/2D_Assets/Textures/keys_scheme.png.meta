@@ -1,10 +1,28 @@
 fileFormatVersion: 2
-guid: e4b70b87e6abe2e43b4ad40f32408558
+guid: 17900c84aba78504e921ac5ec6defa1a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3521424533062495981
-    second: RockBackground_0
+      213: 8299024088555601124
+    second: key_sprite_sheet - Copy_0
+  - first:
+      213: 7088194561141767755
+    second: key_sprite_sheet - Copy_1
+  - first:
+      213: -3627590369095970180
+    second: key_sprite_sheet - Copy_2
+  - first:
+      213: 2038506587436589168
+    second: key_sprite_sheet - Copy_3
+  - first:
+      213: 5828500627582938407
+    second: key_sprite_sheet - Copy_4
+  - first:
+      213: -5333827564325354539
+    second: key_sprite_sheet - Copy_5
+  - first:
+      213: 3738772155883985117
+    second: key_sprite_sheet - Copy_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,21 +55,21 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,19 +115,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -126,23 +131,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RockBackground_0
+      name: keys_red
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1536
-        height: 1024
+        x: 5
+        y: 1
+        width: 9
+        height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 311d6736b03612fc0800000000000000
-      internalID: -3521424533062495981
+      spriteID: 5700a7b0b27151747b80f5fc18a9d56c
+      internalID: 563001568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: keys_green
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 1
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 940e04305122e7d4396eacc5d19f9e36
+      internalID: 812162058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: keys_blue
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 1
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 371de5afee4fb1447a006531e99dbbba
+      internalID: 1009583812
       vertices: []
       indices: 
       edges: []
@@ -151,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 15c02787f4791ad4095488bc3e2b7e36
     internalID: 0
     vertices: []
     indices: 
@@ -159,9 +208,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      RockBackground_0: -3521424533062495981
+      keys_blue: 1009583812
+      keys_green: 812162058
+      keys_red: 563001568
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -3,33 +3,38 @@ using Unity.Cinemachine;
 using UnityEngine;
 
 public class GameManagerVisual : Singleton<GameManagerVisual>
-{   
+{
     [SerializeField] protected CinemachineImpulseSource impulseSource;
     [SerializeField] private ScorePopup scorePopupPrefab;
     [SerializeField] private Transform pickupCollectVfx;
+    [SerializeField] private GameObject cargoCrashVfx;
+
 
     private void Start()
     {
         //Rocket.Instance.OnLanded += Rocket_OnLanded;
         SignalBus.Subcribe<RocketLandedSignal>(OnRocketLanded);
-        Rocket.Instance.OnCoinPickedUp += Rocket_OnCoinPickedUp;
-        Rocket.Instance.OnFuelPickedUp += Rocket_OnFuelPickedUp;
-        Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDelivered;
+        SignalBus.Subcribe<CargoCrashedSignal>(CargoChainCrate_OnCargoCrashed);
+        SignalBus.Subcribe<FuelPickedUpSignal>(OnFuelPickedUp);
+        SignalBus.Subcribe<CoinPickedUpSignal>(OnCoinPickedUp);
+
+        //Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDelivered;
     }
 
-    private void Rocket_OnCargoDelivered(object sender, Rocket.OnCargoDeliveredEventArgs e)
+    private void CargoChainCrate_OnCargoCrashed(CargoCrashedSignal signal)
     {
-        PlayPickupFeedback($"+{GameManager.CARGO_DELIVERY_SCORE}", e.cargo.transform.position);
+        GameObject cargoCrashVfxGO = Instantiate(cargoCrashVfx, (Vector3)signal.crashPoint, Quaternion.identity);
+        Destroy(cargoCrashVfxGO, 1f);
     }
 
-    private void Rocket_OnFuelPickedUp(object sender, Rocket.OnFuelPickedUpEventArgs e)
+    private void OnFuelPickedUp(FuelPickedUpSignal signal)
     {
-        PlayPickupFeedback("REFILL", e.fuelPickup.transform.position);
+        PlayPickupFeedback("REFILL", signal.pickupPosition);
     }
 
-    private void Rocket_OnCoinPickedUp(object sender, Rocket.OnCoinPickedUpEventArgs e)
+    private void OnCoinPickedUp(CoinPickedUpSignal signal)
     {
-        PlayPickupFeedback($"+{GameManager.COIN_PICKUP_SCORE}", e.coinPickup.transform.position);
+        PlayPickupFeedback($"+{GameManager.COIN_PICKUP_SCORE}", signal.pickupPosition);
     }
 
     private void OnRocketLanded(RocketLandedSignal signal)
@@ -55,5 +60,8 @@ public class GameManagerVisual : Singleton<GameManagerVisual>
     private void OnDestroy()
     {
         SignalBus.Unsubcribe<RocketLandedSignal>(OnRocketLanded);
+        SignalBus.Unsubcribe<CargoCrashedSignal>(CargoChainCrate_OnCargoCrashed);
+        SignalBus.Unsubcribe<CoinPickedUpSignal>(OnCoinPickedUp);
+        SignalBus.Unsubcribe<FuelPickedUpSignal>(OnFuelPickedUp);
     }
 }

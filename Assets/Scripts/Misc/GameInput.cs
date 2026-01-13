@@ -1,17 +1,16 @@
 using System;
 using UnityEngine;
 
-public class GameInput : MonoBehaviour
+public class GameInput : Singleton<GameInput>
 {
-    public static GameInput Instance { get; private set; }
 
     public event EventHandler OnPauseAction;
 
     private InputSystem_Actions inputActions;
 
-    private void Awake()
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
         inputActions = new InputSystem_Actions();
         inputActions.Player.Move.Enable();
         inputActions.Player.Pause.Enable();
