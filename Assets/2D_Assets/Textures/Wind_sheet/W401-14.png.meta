@@ -1,28 +1,16 @@
 fileFormatVersion: 2
-guid: ba7a86f8731de244c872afa172c01667
+guid: f6c0df54ae1bb10429982a1249482f24
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -312351269765355383
-    second: key_sprite_sheet_0
+      213: 3635197062919701551
+    second: W401-14_0
   - first:
-      213: -8855213846503497384
-    second: key_sprite_sheet_1
+      213: 5514403530596866397
+    second: W401-14_1
   - first:
-      213: 15594124593123316
-    second: key_sprite_sheet_2
-  - first:
-      213: 8623300260255269911
-    second: key_sprite_sheet_3
-  - first:
-      213: 7628023634356044137
-    second: key_sprite_sheet_4
-  - first:
-      213: -6817717092325012925
-    second: key_sprite_sheet_5
-  - first:
-      213: -8917883992245304439
-    second: key_sprite_sheet_6
+      213: 5208048580252035696
+    second: W401-14_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -64,12 +52,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 20
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -131,155 +119,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: key_sprite_sheet_0
+      name: W401-14_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 40
-        width: 11
-        height: 20
+        x: 399
+        y: 271
+        width: 34
+        height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9886e70dc2e4aabf0800000000000000
-      internalID: -312351269765355383
+      spriteID: f244fd7f770d27230800000000000000
+      internalID: 3635197062919701551
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: key_sprite_sheet_3
+      name: W401-14_1
       rect:
         serializedVersion: 2
-        x: 5
-        y: 20
-        width: 9
-        height: 20
+        x: 367
+        y: 223
+        width: 66
+        height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 851e90d6ce5fb1580800000000000000
-      internalID: -8855213846503497384
+      spriteID: d59d2656bc8178c40800000000000000
+      internalID: 5514403530596866397
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: key_sprite_sheet_1
+      name: W401-14_2
       rect:
         serializedVersion: 2
-        x: 25
-        y: 40
-        width: 9
-        height: 20
+        x: 447
+        y: 175
+        width: 50
+        height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4ffc4f016c6673000800000000000000
-      internalID: 15594124593123316
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: key_sprite_sheet_4
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 20
-        width: 9
-        height: 20
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7148c0406ed1ca770800000000000000
-      internalID: 8623300260255269911
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: key_sprite_sheet_2
-      rect:
-        serializedVersion: 2
-        x: 45
-        y: 40
-        width: 9
-        height: 20
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9618318941f2cd960800000000000000
-      internalID: 7628023634356044137
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: key_sprite_sheet_5
-      rect:
-        serializedVersion: 2
-        x: 45
-        y: 20
-        width: 9
-        height: 20
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 34acbd42d6a9261a0800000000000000
-      internalID: -6817717092325012925
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: key_sprite_sheet_6
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 0
-        width: 11
-        height: 20
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 983831e02cf4d3480800000000000000
-      internalID: -8917883992245304439
+      spriteID: 07a66ee1794b64840800000000000000
+      internalID: 5208048580252035696
       vertices: []
       indices: 
       edges: []
@@ -288,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 320e09282d3209f47b756b9bb04e4cfa
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -298,13 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      key_sprite_sheet_0: -312351269765355383
-      key_sprite_sheet_1: 15594124593123316
-      key_sprite_sheet_2: 7628023634356044137
-      key_sprite_sheet_3: -8855213846503497384
-      key_sprite_sheet_4: 8623300260255269911
-      key_sprite_sheet_5: -6817717092325012925
-      key_sprite_sheet_6: -8917883992245304439
+      W401-14_0: 3635197062919701551
+      W401-14_1: 5514403530596866397
+      W401-14_2: 5208048580252035696
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

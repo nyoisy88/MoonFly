@@ -14,9 +14,9 @@ TagManager:
   - Draggable
   - Chain
   - Door
-  - 
-  - 
-  - 
+  - Projectile
+  - Ground
+  - LandingZone
   - 
   - 
   - 

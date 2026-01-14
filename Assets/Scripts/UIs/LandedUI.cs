@@ -22,7 +22,16 @@ public class LandedUI : MonoBehaviour
         });
         //Rocket.Instance.OnLanded += Rocket_HandleLandingOnce;
         SignalBus.Subcribe<RocketLandedSignal>(Rocket_HandleLandingOnce);
+        Rocket.Instance.OnBulletHit += Rocket_OnBulletHit;
         Hide();
+    }
+
+    private void Rocket_OnBulletHit(object sender, EventArgs e)
+    {
+        Show();
+            landedResultText.text = "<color=#ffa500>NOT TOO SLOW?</color>";
+            nextBtnText.text = "RETRY";
+            OnNextButtonClick = GameManager.Instance.Retry;
     }
 
     private void Rocket_HandleLandingOnce(RocketLandedSignal signal)

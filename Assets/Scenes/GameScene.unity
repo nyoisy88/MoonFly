@@ -5881,6 +5881,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Rocket
   cargoChainPrefab: {fileID: 6314126042901386045, guid: 649c062c22232b74885ed54659fa31c5, type: 3}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!50 &2107387860
 Rigidbody2D:
   serializedVersion: 5

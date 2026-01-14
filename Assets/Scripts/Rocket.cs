@@ -28,12 +28,14 @@ public class Rocket : Singleton<Rocket>
     }
 
     public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
+    public event EventHandler OnBulletHit;
     
     public event EventHandler OnBeforeForce;
     public event EventHandler OnUpForce;
     public event EventHandler<bool> OnTurnForce;
 
     [SerializeField] private GameObject cargoChainPrefab;
+    [SerializeField] private LayerMask groundLayer;
 
     private State state;
     private Rigidbody2D rb;
@@ -194,7 +196,8 @@ public class Rocket : Singleton<Rocket>
     private void OnCollisionEnter2D(Collision2D collision)
     {
         CurrentState = State.Disabled;
-        if (!collision.gameObject.TryGetComponent(out LandingPad landingPad))
+        int collisionLayerMask = collision.gameObject.layer;
+        if ((groundLayer & (1 << collisionLayerMask)) > 0)
         {
             SignalBus.Fire(new RocketLandedSignal
             {
@@ -203,6 +206,12 @@ public class Rocket : Singleton<Rocket>
             });
             return;
         }
+
+        if (! collision.gameObject.TryGetComponent(out LandingPad landingPad))
+        {
+            return;
+        }
+
         float softLandingVelocityMagtitude = 5f;
         float landingSpeedMagtitude = collision.relativeVelocity.magnitude;
         if (landingSpeedMagtitude > softLandingVelocityMagtitude)
@@ -254,4 +263,10 @@ public class Rocket : Singleton<Rocket>
 
     }
 
+    internal void Explosion()
+    {
+        CurrentState = State.Disabled;
+        
+        OnBulletHit?.Invoke(this, EventArgs.Empty);
+    }
 }

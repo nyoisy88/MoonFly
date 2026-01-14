@@ -23,10 +23,17 @@ public class RocketVisual : MonoBehaviour
         rocket.OnUpForce += Rocket_OnUpForce;
         rocket.OnTurnForce += Rocket_OnTurnForce;
         rocket.OnBeforeForce += Rocket_OnBeforeForce;
+        rocket.OnBulletHit += Rocket_OnBulletHit;
         //rocket.OnLanded += Rocket_OnLanded;
         SignalBus.Subcribe<RocketLandedSignal>(OnRocketLanded);
 
         DisableAllThruster();
+    }
+
+    private void Rocket_OnBulletHit(object sender, EventArgs e)
+    {
+        Instantiate(explosionVfx, transform.position, Quaternion.identity);
+        gameObject.SetActive(false);
     }
 
     private void OnRocketLanded(RocketLandedSignal e)
