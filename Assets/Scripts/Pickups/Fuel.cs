@@ -1,3 +1,4 @@
+using Signals;
 using UnityEngine;
 
 public class Fuel : MonoBehaviour, IPickup
@@ -9,7 +10,12 @@ public class Fuel : MonoBehaviour, IPickup
 
     public void OnCollected(Rocket rocket)
     {
-        rocket.AddFuel(this);
+        SignalBus.Fire(new FuelPickedUpSignal
+        {
+            pickupPosition = this.transform.position
+        });
+        float fuelAmount = 12f;
+        rocket.AddFuel(fuelAmount);
         DestroySelf();
     }
 }

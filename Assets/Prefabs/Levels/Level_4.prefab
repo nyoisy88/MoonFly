@@ -79,9 +79,9 @@ SpriteShapeRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 1027692367
-  m_SortingLayer: -1
-  m_SortingOrder: 10
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
   m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: e4b70b87e6abe2e43b4ad40f32408558, type: 3}
@@ -778,9 +778,9 @@ SpriteShapeRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 1027692367
-  m_SortingLayer: -1
-  m_SortingOrder: 10
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
   m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: e4b70b87e6abe2e43b4ad40f32408558, type: 3}
@@ -1353,6 +1353,7 @@ GameObject:
   - component: {fileID: 1783272271466310150}
   - component: {fileID: 8588040661792123044}
   - component: {fileID: 7044745107651018237}
+  - component: {fileID: 8234488628620128901}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -1422,7 +1423,7 @@ SpriteShapeRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 0
   m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: e4b70b87e6abe2e43b4ad40f32408558, type: 3}
@@ -1563,8 +1564,79 @@ MonoBehaviour:
   m_UpdateGeometry: 1
   m_Creator: {fileID: 0}
   m_Modifiers: []
-  m_ColliderSegment: []
+  m_ColliderSegment:
+  - {x: -2.3219109, y: -12.814602}
+  - {x: -6.6266937, y: 2.9828691}
+  - {x: 6.378834, y: 6.9486094}
+  - {x: 9.675056, y: 4.3702726}
+  - {x: 6.882019, y: 0.98474884}
+  - {x: -1.6083336, y: 0.18562508}
+  - {x: 0.19675064, y: -7.957437}
+  - {x: 8.052237, y: -7.866623}
+  - {x: 8.031351, y: -13.043994}
+  - {x: 6.746647, y: -15.336168}
+  - {x: 3.0508232, y: -17.599718}
+  - {x: -2.3219109, y: -12.814602}
   m_ShadowSegment: []
+--- !u!60 &8234488628620128901
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8293468140962246260}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -2.3219109, y: -12.814602}
+      - {x: -6.6266937, y: 2.9828691}
+      - {x: 6.378834, y: 6.9486094}
+      - {x: 9.675056, y: 4.3702726}
+      - {x: 6.882019, y: 0.98474884}
+      - {x: -1.6083336, y: 0.18562508}
+      - {x: 0.19675064, y: -7.957437}
+      - {x: 8.052237, y: -7.866623}
+      - {x: 8.031351, y: -13.043994}
+      - {x: 6.746647, y: -15.336168}
+      - {x: 3.0508232, y: -17.599718}
+      - {x: -2.3219109, y: -12.814602}
+  m_UseDelaunayMesh: 0
 --- !u!1001 &362826039048267809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3065,6 +3137,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7066148633327506162}
     m_Modifications:
+    - target: {fileID: 217016440214173165, guid: 2e4f9f4d91f09c8498086c6bf5491661, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4608688051697997208, guid: 2e4f9f4d91f09c8498086c6bf5491661, type: 3}
       propertyPath: m_Name
       value: Cannon
@@ -3108,6 +3184,10 @@ PrefabInstance:
     - target: {fileID: 6070492494216198412, guid: 2e4f9f4d91f09c8498086c6bf5491661, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -55.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 6242834103731274270, guid: 2e4f9f4d91f09c8498086c6bf5491661, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

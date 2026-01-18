@@ -22,24 +22,26 @@ public class LandedUI : MonoBehaviour
         });
         //Rocket.Instance.OnLanded += Rocket_HandleLandingOnce;
         SignalBus.Subcribe<RocketLandedSignal>(Rocket_HandleLandingOnce);
-        Rocket.Instance.OnBulletHit += Rocket_OnBulletHit;
+        SignalBus.Subcribe<RocketDestroyedSignal>(Rocket_OnRocketDestroyed);
         Hide();
     }
 
-    private void Rocket_OnBulletHit(object sender, EventArgs e)
+    private void Rocket_OnRocketDestroyed(RocketDestroyedSignal signal)
     {
+
         Show();
-            landedResultText.text = "<color=#ffa500>NOT TOO SLOW?</color>";
-            nextBtnText.text = "RETRY";
-            OnNextButtonClick = GameManager.Instance.Retry;
+        landedResultText.text = "<color=#FF0000>EXPLOSION!</color>";
+        nextBtnText.text = "RETRY";
+        OnNextButtonClick = GameManager.Instance.Retry;
     }
 
     private void Rocket_HandleLandingOnce(RocketLandedSignal signal)
     {
-        //Rocket.Instance.OnLanded -= Rocket_HandleLandingOnce;
         SignalBus.Unsubcribe<RocketLandedSignal>(Rocket_HandleLandingOnce);
+        SignalBus.Unsubcribe<RocketDestroyedSignal>(Rocket_OnRocketDestroyed);
 
         Show();
+        bool success = true;
         if (signal.landingType == Rocket.LandingType.Success)
         {
             landedResultText.text = "SUCCESS!!";
@@ -48,15 +50,16 @@ public class LandedUI : MonoBehaviour
         }
         else
         {
-            landedResultText.text = "<color=#FF0000>CRASHED!!</color>";
+            landedResultText.text = "<color=#ffa500>CRASHED!!</color>";
             nextBtnText.text = "RETRY";
             OnNextButtonClick = GameManager.Instance.Retry;
+            success = false;
         }
 
         statsText.text = $@"{signal.landingAngle}
                                 {signal.landingSpeed}
-                                x{signal.scoreMultiplier}
-                                {signal.score + GameManager.Instance.Score}";
+                                x{(success ? signal.scoreMultiplier : 0)}
+                                {signal.score + (success ? GameManager.Instance.Score : 0)}";
     }
 
     private void Show()
@@ -73,5 +76,6 @@ public class LandedUI : MonoBehaviour
     private void OnDestroy()
     {
         SignalBus.Unsubcribe<RocketLandedSignal>(Rocket_HandleLandingOnce);
+        SignalBus.Unsubcribe<RocketDestroyedSignal>(Rocket_OnRocketDestroyed);
     }
 }

@@ -16,13 +16,23 @@ public class FallingStarManager : MonoBehaviour
 
     }
 
+    private int lastIndex = -1;
+
     private void SpawnFallingStar()
     {
 
-        Transform randomSpawnPoint = fallingStarSpawnPoints[Random.Range(0, fallingStarSpawnPoints.Length)];
+        int index;
+        do
+        {
+            index = Random.Range(0, fallingStarSpawnPoints.Length);
+        }
+        while (index == lastIndex);
+
+        lastIndex = index;
+        Transform randomSpawnPoint = fallingStarSpawnPoints[index];
         Transform fallingStarTransform = Instantiate(fallingStarPrefab, randomSpawnPoint.position, Quaternion.identity);
         Rigidbody2D fallingStarRb = fallingStarTransform.GetComponent<Rigidbody2D>();
-        fallingStarRb.AddForce(new Vector2(Random.Range(-800, -300), 0f));
+        fallingStarRb.AddForce(new Vector2(Random.Range(-1000, -300), 0f));
         Destroy(fallingStarTransform.gameObject, 5f);
     }
 }

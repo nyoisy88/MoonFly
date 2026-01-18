@@ -1,6 +1,8 @@
 using Signals;
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManagerVisual : Singleton<GameManagerVisual>
 {
@@ -17,8 +19,14 @@ public class GameManagerVisual : Singleton<GameManagerVisual>
         SignalBus.Subcribe<CargoCrashedSignal>(CargoChainCrate_OnCargoCrashed);
         SignalBus.Subcribe<FuelPickedUpSignal>(OnFuelPickedUp);
         SignalBus.Subcribe<CoinPickedUpSignal>(OnCoinPickedUp);
-
+        SignalBus.Subcribe<CargoDeliveredSignal>(OnCargoDeliverd);
         //Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDelivered;
+    }
+
+    private void OnCargoDeliverd(CargoDeliveredSignal signal)
+    {
+        ScorePopup scorePopup = Instantiate(scorePopupPrefab, signal.deliverPoint, Quaternion.identity);
+        scorePopup.SetText($"+{GameManager.CARGO_DELIVERY_SCORE}");
     }
 
     private void CargoChainCrate_OnCargoCrashed(CargoCrashedSignal signal)
@@ -61,6 +69,8 @@ public class GameManagerVisual : Singleton<GameManagerVisual>
     {
         SignalBus.Unsubcribe<RocketLandedSignal>(OnRocketLanded);
         SignalBus.Unsubcribe<CargoCrashedSignal>(CargoChainCrate_OnCargoCrashed);
+        SignalBus.Unsubcribe<CargoDeliveredSignal>(OnCargoDeliverd);
+
         SignalBus.Unsubcribe<CoinPickedUpSignal>(OnCoinPickedUp);
         SignalBus.Unsubcribe<FuelPickedUpSignal>(OnFuelPickedUp);
     }

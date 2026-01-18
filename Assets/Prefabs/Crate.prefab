@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3861284551394368400}
   - component: {fileID: 626580037900973519}
   - component: {fileID: 4038296524885336615}
-  - component: {fileID: 1827738041564427664}
   m_Layer: 6
   m_Name: Crate
   m_TagString: Untagged
@@ -94,20 +93,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c865680a01cb624eb00d0c991b03b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CargoChainCrate
-  cargoSO: {fileID: 11400000, guid: 6f619007b34c7a442944229b21723da3, type: 2}
---- !u!114 &1827738041564427664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2870796966225874297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6210792463f72914f8a36c6596c469b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CargoChainCrateVisual
-  cargoCrashVfx: {fileID: 5794599511677616454, guid: 9a47fed3b8601964da7641e1000e91cd, type: 3}
 --- !u!1 &5892754467253181437
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,8 +169,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 824712015
+  m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: -5917676510832205790, guid: 59e3ee4566d181248bea39766269e07a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -274,8 +259,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 824712015
+  m_SortingLayer: 1
   m_SortingOrder: 3
   m_Sprite: {fileID: -5917676510832205790, guid: 59e3ee4566d181248bea39766269e07a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

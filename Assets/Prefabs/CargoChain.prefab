@@ -144,7 +144,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.1
   m_LinearDamping: 1
-  m_AngularDamping: 0
+  m_AngularDamping: 5
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -417,7 +417,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.1
   m_LinearDamping: 1
-  m_AngularDamping: 0
+  m_AngularDamping: 5
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -600,7 +600,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.1
   m_LinearDamping: 1
-  m_AngularDamping: 0
+  m_AngularDamping: 5
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -777,7 +777,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 2
-  m_AngularDamping: 0
+  m_AngularDamping: 5
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -812,7 +812,7 @@ HingeJoint2D:
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 0
@@ -871,7 +871,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.1
   m_LinearDamping: 1
-  m_AngularDamping: 0
+  m_AngularDamping: 5
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -898,6 +898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CargoChain
   anchor: {fileID: 384274915817015893}
   cargoSprite: {fileID: 2359835421066343463}
+  cargoHoldPoint: {fileID: 8170100725584842511}
 --- !u!232 &7757178308944695213
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -1088,7 +1089,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.1
   m_LinearDamping: 1
-  m_AngularDamping: 0
+  m_AngularDamping: 5
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1271,7 +1272,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.1
   m_LinearDamping: 1
-  m_AngularDamping: 0
+  m_AngularDamping: 5
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

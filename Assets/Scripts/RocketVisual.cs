@@ -23,14 +23,14 @@ public class RocketVisual : MonoBehaviour
         rocket.OnUpForce += Rocket_OnUpForce;
         rocket.OnTurnForce += Rocket_OnTurnForce;
         rocket.OnBeforeForce += Rocket_OnBeforeForce;
-        rocket.OnBulletHit += Rocket_OnBulletHit;
+        SignalBus.Subcribe<RocketDestroyedSignal>( OnRocketDestroyed);
         //rocket.OnLanded += Rocket_OnLanded;
         SignalBus.Subcribe<RocketLandedSignal>(OnRocketLanded);
 
         DisableAllThruster();
     }
 
-    private void Rocket_OnBulletHit(object sender, EventArgs e)
+    private void OnRocketDestroyed(RocketDestroyedSignal signal)
     {
         Instantiate(explosionVfx, transform.position, Quaternion.identity);
         gameObject.SetActive(false);
@@ -96,5 +96,7 @@ public class RocketVisual : MonoBehaviour
     private void OnDestroy()
     {
         SignalBus.Unsubcribe<RocketLandedSignal>(OnRocketLanded);
+        SignalBus.Unsubcribe<RocketDestroyedSignal>(OnRocketDestroyed);
+
     }
 }

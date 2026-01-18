@@ -5,6 +5,8 @@ public class Door : MonoBehaviour
     private const string UNLOCK = "Unlock";
     [SerializeField] private CargoArea keyUnlockArea;
 
+    private bool isUnlocked;
+
     private Animator animator;
     private void Awake()
     {
@@ -13,11 +15,15 @@ public class Door : MonoBehaviour
 
     private void Start()
     {
-        keyUnlockArea.OnCargoDelivered += KeyUnlockArea_OnInteractCompleted;
+        keyUnlockArea.OnDeliveryCompleted += KeyUnlockArea_OnInteractCompleted;
     }
 
     private void KeyUnlockArea_OnInteractCompleted(object sender, System.EventArgs e)
     {
-        animator.SetTrigger(UNLOCK);
+        if (!isUnlocked)
+        {
+            animator.SetTrigger(UNLOCK);
+            isUnlocked = true;
+        }
     }
 }

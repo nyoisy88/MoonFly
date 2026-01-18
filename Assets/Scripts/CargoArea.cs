@@ -1,9 +1,10 @@
+using Signals;
 using System;
 using UnityEngine;
 
 public class CargoArea : MonoBehaviour
 {
-    public event EventHandler OnCargoDelivered;
+    public event EventHandler OnDeliveryCompleted;
 
     [Serializable]
     public enum InteractType
@@ -62,10 +63,21 @@ public class CargoArea : MonoBehaviour
         }
         else
         {
-            rocket.DeliverCargo();
-            IsDisabled = true;
-            OnCargoDelivered?.Invoke(this, EventArgs.Empty);
+            ExecuteDelivery();
         }
+
+    }
+
+    void ExecuteDelivery()
+    {
+        rocket.DestroyCargo();
+        GameManager.Instance.DeliverCargo();
+        SignalBus.Fire(new CargoDeliveredSignal
+        {
+            deliverPoint = transform.position
+        });
+        IsDisabled = true;
+        OnDeliveryCompleted?.Invoke(this, EventArgs.Empty);
 
     }
 

@@ -28,14 +28,12 @@ public class Rocket : Singleton<Rocket>
     }
 
     public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
-    public event EventHandler OnBulletHit;
     
     public event EventHandler OnBeforeForce;
     public event EventHandler OnUpForce;
     public event EventHandler<bool> OnTurnForce;
 
     [SerializeField] private GameObject cargoChainPrefab;
-    [SerializeField] private LayerMask groundLayer;
 
     private State state;
     private Rigidbody2D rb;
@@ -45,7 +43,7 @@ public class Rocket : Singleton<Rocket>
     private CargoSO cargoSO;
     private CargoChain cargoChain;
 
-    private readonly float fuelAmountMax = 12f;
+    private readonly float fuelAmountMax = 15f;
     private readonly float fuelExhaustRate = 1f;
     readonly float gamePadDeadzone = .4f;
 
@@ -141,15 +139,9 @@ public class Rocket : Singleton<Rocket>
         fuelAmount -= fuelExhaustRate * Time.fixedDeltaTime;
     }
 
-    public void AddFuel(Fuel fuelPickup)
+    public void AddFuel(float amount)
     {
-        fuelAmount = fuelAmountMax;
-        SignalBus.Fire(new FuelPickedUpSignal { pickupPosition = fuelPickup.transform.position });
-    }
-
-    public void AddCoin(Coin coinPickup)
-    {
-        SignalBus.Fire(new CoinPickedUpSignal { pickupPosition = coinPickup.transform.position});
+        fuelAmount = Mathf.Min(fuelAmount + amount, fuelAmountMax);
     }
 
     public void PickUpCargo(CargoSO cargo)
@@ -171,44 +163,33 @@ public class Rocket : Singleton<Rocket>
         return cargoSO != null;
     }
 
-    public void DeliverCargo()
+    public void DestroyCargo()
     {
-        if (cargoSO != null)
-        {
-            Destroy(cargoChain.gameObject);
-            ClearCargo();
-            ClearChain();
-        }
+        DetachChain();
+        ClearCargo();
     }
 
-    public void CargoCrashed()
+    private void DetachChain()
     {
         Destroy(cargoChain.gameObject);
-        ClearCargo();
-        ClearChain();
+        cargoChain = null;
     }
 
-    private void ClearChain()
+
+    public void Destroyed()
     {
-        cargoChain = null;
+        CurrentState = State.Disabled;
+
+        SignalBus.Fire(new RocketDestroyedSignal());
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         CurrentState = State.Disabled;
-        int collisionLayerMask = collision.gameObject.layer;
-        if ((groundLayer & (1 << collisionLayerMask)) > 0)
-        {
-            SignalBus.Fire(new RocketLandedSignal
-            {
-                landingType = LandingType.WrongLandingArea,
-                score = 0,
-            });
-            return;
-        }
 
         if (! collision.gameObject.TryGetComponent(out LandingPad landingPad))
         {
+            this.Destroyed();
             return;
         }
 
@@ -261,12 +242,5 @@ public class Rocket : Singleton<Rocket>
             pickups.OnCollected(this);
         }
 
-    }
-
-    internal void Explosion()
-    {
-        CurrentState = State.Disabled;
-        
-        OnBulletHit?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -16,7 +16,7 @@ public class CargoChainCrate : MonoBehaviour
     {
         if (!collision.gameObject.TryGetComponent(out LandingPad _))
         {
-            Rocket.Instance.CargoCrashed();
+            Rocket.Instance.DestroyCargo();
             SignalBus.Fire(new CargoCrashedSignal
             {
                 crashPoint = collision.GetContact(0).point

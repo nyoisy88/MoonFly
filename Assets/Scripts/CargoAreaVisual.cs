@@ -16,7 +16,7 @@ public class CargoAreaVisual : MonoBehaviour
     private void Start()
     {
         cargoSprite.sprite = cargoArea.CargoSO.sprite;
-        cargoArea.OnCargoDelivered += CargoArea_OnCargoDelivered;
+        cargoArea.OnDeliveryCompleted += CargoArea_OnCargoDelivered;
     }
 
     private void CargoArea_OnCargoDelivered(object sender, System.EventArgs e)

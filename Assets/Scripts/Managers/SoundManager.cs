@@ -13,7 +13,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private AudioClip crash;
     [SerializeField] private AudioClip landingSuccess;
 
-    private float soundVolumeMultiplier = 1f;
+    private float soundVolumeMultiplier;
 
     public float SoundVolume
     {
@@ -40,7 +40,13 @@ public class SoundManager : Singleton<SoundManager>
         SignalBus.Subcribe<CoinPickedUpSignal>(OnCoinPickedUp);
         SignalBus.Subcribe<FuelPickedUpSignal>(OnFuelPickedUp);
         SignalBus.Subcribe<RocketLandedSignal>(OnRocketLanded);
+        SignalBus.Subcribe<RocketDestroyedSignal>(OnRocketDestroyed);
         // Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDelivered;
+    }
+
+    private void OnRocketDestroyed(RocketDestroyedSignal signal)
+    {
+        PlaySound(crash);
     }
 
     private void OnRocketLanded(RocketLandedSignal signal)
@@ -82,6 +88,8 @@ public class SoundManager : Singleton<SoundManager>
         SignalBus.Unsubcribe<RocketLandedSignal>(OnRocketLanded);
         SignalBus.Unsubcribe<CoinPickedUpSignal>(OnCoinPickedUp);
         SignalBus.Unsubcribe<FuelPickedUpSignal>(OnFuelPickedUp);
+        SignalBus.Unsubcribe<RocketDestroyedSignal>(OnRocketDestroyed);
+
 
     }
 }

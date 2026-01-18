@@ -20,7 +20,7 @@ public class CannonBullet : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Rocket rocket))
         {
-            rocket.Explosion();
+            rocket.Destroyed();
         }
         Destroy(gameObject);
         

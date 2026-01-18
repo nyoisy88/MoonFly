@@ -7,8 +7,6 @@ public class MusicManager : Singleton<MusicManager>
 
     public static float musicTime;
 
-    public event EventHandler<float> OnMusicVolumeChanged;
-
     private AudioSource audioSource;
     private float musicVolume;
 
@@ -23,7 +21,6 @@ public class MusicManager : Singleton<MusicManager>
             musicVolume = value;
             audioSource.volume = musicVolume;
             PlayerPrefs.SetFloat(PLAYER_PREFS_MUSIC_VOLUME, musicVolume);
-            OnMusicVolumeChanged?.Invoke(this, musicVolume);
         }
     }
 

@@ -1,3 +1,4 @@
+using Signals;
 using UnityEngine;
 
 public class Coin : MonoBehaviour, IPickup
@@ -9,7 +10,10 @@ public class Coin : MonoBehaviour, IPickup
 
     public void OnCollected(Rocket rocket)
     {
-        rocket.AddCoin(this);
+        SignalBus.Fire(new CoinPickedUpSignal
+        {
+            pickupPosition = transform.position,
+        });
         DestroySelf();
     }
 }

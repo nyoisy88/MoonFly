@@ -8,8 +8,8 @@ using static Rocket;
 public class GameManager : Singleton<GameManager>
 {
     public const string PLAYER_PREFS_CURRENT_LEVEL = "Game_Level";
-    public const int COIN_PICKUP_SCORE = 500;
-    public const int CARGO_DELIVERY_SCORE = 5000;
+    public const int COIN_PICKUP_SCORE = 100;
+    public const int CARGO_DELIVERY_SCORE = 1000;
 
 
     public event EventHandler OnGamePaused;
@@ -40,13 +40,14 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        currentLevel = 3;
-            // PlayerPrefs.GetInt(PLAYER_PREFS_CURRENT_LEVEL, 1);
+        currentLevel = 
+             PlayerPrefs.GetInt(PLAYER_PREFS_CURRENT_LEVEL, 1);
     }
     private void Start()
     {
         SignalBus.Subcribe<RocketLandedSignal>(OnRocketLanded);
         SignalBus.Subcribe<CoinPickedUpSignal>(OnCoinPickedUp);
+        //SignalBus.Subcribe<CargoDeliveredSignal>(DeliverCargo);
         //Rocket.Instance.OnCargoDelivered += Rocket_OnCargoDropOff;
         Rocket.Instance.OnStateChanged += Rocket_OnStateChanged;
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
@@ -57,6 +58,8 @@ public class GameManager : Singleton<GameManager>
     {
         SignalBus.Unsubcribe<RocketLandedSignal>(OnRocketLanded);
         SignalBus.Unsubcribe<CoinPickedUpSignal>(OnCoinPickedUp);
+        //SignalBus.Unsubcribe<CargoDeliveredSignal>(DeliverCargo);
+
     }
 
     private void Update()
@@ -75,9 +78,17 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public void DeliverCargo()
+    {
+        AddScore(CARGO_DELIVERY_SCORE);
+    }
+
     private void OnRocketLanded(RocketLandedSignal signal)
     {
-        AddScore(signal.score);
+        if (signal.landingType == LandingType.Success)
+        {
+            AddScore(signal.score);
+        }
     }
 
     private void OnCoinPickedUp(CoinPickedUpSignal signal)
